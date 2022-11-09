@@ -31,7 +31,7 @@
     "test_recall": "-",
     "test_f1": "-",
     "test_roc_auc": "-",
-    "training_time": 5.9763,
-    "val_pred_time": 0.1158,
+    "training_time": 5.3059,
+    "val_pred_time": 0.1179,
     "test_pred_time": "-"
 }
