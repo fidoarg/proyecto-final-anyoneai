@@ -5,6 +5,7 @@ import time
 import numpy as np
 import redis
 import xgboost as xgb
+import settings
 
 # TODO: Completed
 # Connect to Redis and assign to variable `db``
