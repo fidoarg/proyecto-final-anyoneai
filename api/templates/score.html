@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+    <head>
+        <title>CREDIT RISK ANALYSIS API</title>
+    </head>
+    {% if prediction %}
+        <div class="row">
+            <div class="col-25">
+                <label for="subject">Predicted class: {{ prediction }} </label><br>
+                <label for="subject">Your Credit Score is: {{ score }}</label>
+            </div>
+        </div>
+    {% endif %}
+</html>

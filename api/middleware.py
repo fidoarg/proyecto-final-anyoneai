@@ -15,15 +15,15 @@ db = redis.Redis(
 )
 
 
-def model_predict(image_name):
+def model_predict(data):
     """
     Receives an image name and queues the job into Redis.
     Will loop until getting the answer from our ML service.
 
     Parameters
     ----------
-    image_name : str
-        Name for the image uploaded by the user.
+    data : Dict
+        Data given by the user.
 
     Returns
     -------
@@ -47,7 +47,7 @@ def model_predict(image_name):
     # TODO: Completed
     job_data = {
         "id": job_id,
-        "image_name": image_name,
+        "data": data,
     }
 
     # Send the job to the model service using Redis
@@ -57,18 +57,12 @@ def model_predict(image_name):
 
     # Loop until we received the response from our ML model
     while True:
-        # Attempt to get model predictions using job_id
-        # Hint: Investigate how can we get a value using a key from Redis
-        # TODO: Completed
         # If key exists, store the results
         if db.exists(job_id):
             output = json.loads(db.get(job_id).decode('utf-8'))
             prediction = output['prediction']
             score = output['score']
 
-        # Don't forget to delete the job from Redis after we get the results!
-        # Then exit the loop
-        # TODO: Completed
         # Delete job
             db.delete(job_id)
             break
