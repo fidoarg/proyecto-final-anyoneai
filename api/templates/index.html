@@ -5,13 +5,19 @@
     </head>
     <body>
         <h2>Fill the form to evaluate your credit score</h2>
-        <form method="POST" action="/score" id="application">
+        <form method="post" action="/score" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="input-group">
                     <label for="sex">Gender:</label>
                     <select id="sex" name="sex">
-                        {% for gender in genders %}
-                        <option value="{{ gender }}">{{ gender }}</option>
+                        {% for value in genders %}
+                        <option value="{{ value }}">{{ value }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="company">Company:</label>
+                    <select id="company" name="company">
+                        {% for value in company %}
+                        <option value="{{ value }}">{{ value }}</option>
                         {% endfor %}
                     </select>
                 </div>
