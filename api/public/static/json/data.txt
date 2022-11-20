@@ -1,0 +1,40 @@
+data = {
+        DONE -> 'PAYMENT_DAY': [1, 5, 10, 15, 20, 25], # Select box
+        DONE -> 'APPLICATION_SUBMISSION_TYPE': 'Web', # Hidden 'Web' default
+        'POSTAL_ADDRESS_TYPE': [1, 2],  # 1: Home, 2: Other
+        'SEX': ["M", "F"],        
+        'MARITAL_STATUS': [1, ..., 7], # 1: Single, 2: Married, 3: Divorced, 4:
+        'QUANT_DEPENDANTS': int, 
+        'STATE_OF_BIRTH': ["RJ": "Rio de Janeiro", ..., ],
+        'NACIONALITY': {0: "Latin America", 1: "Brazil", 2: "Other"}
+        'RESIDENCIAL_STATE': ["RJ": "Rio de Janeiro", ..., ],
+        'FLAG_RESIDENCIAL_PHONE': {"Y": "Yes", "N": "No"},
+        'RESIDENCIAL_PHONE_AREA_CODE': Opt, # Depends on 'FLAG_RESIDENCIAL_PHONE'
+        'RESIDENCE_TYPE': {1: "Owned",
+                           2: "Mortgage",
+                           3: "Rented",
+                           4: "Parents",
+                           5: "Family"},
+        'MONTHS_IN_RESIDENCE': int,
+        'FLAG_EMAIL': {0: "No", 1: "Yes"},
+        'PERSONAL_MONTHLY_INCOME': int,
+        'OTHER_INCOMES': int,
+        'FLAG_VISA': {0: "No", 1: "Yes"},
+        'FLAG_MASTERCARD': {0: "No", 1: "Yes"},
+        'FLAG_DINERS': {0: "No", 1: "Yes"},
+        'FLAG_AMERICAN_EXPRESS': {0: "No", 1: "Yes"},
+        'FLAG_OTHER_CARDS': {0: "No", 1: "Yes"},
+        'QUANT_BANKING_ACCOUNTS': int <= 10,
+        'PERSONAL_ASSETS_VALUE': int,
+        'QUANT_CARS': int,
+        'COMPANY': {"Y": "Yes", "N": "No"},
+        'PROFESSIONAL_STATE': ["RJ": "Rio de Janeiro", ..., ],
+        'FLAG_PROFESSIONAL_PHONE': {"Y": "Yes", "N": "No"},
+        'PROFESSIONAL_PHONE_AREA_CODE': Opt, # Depends on 'FLAG_PROFESSIONAL_PHONE'
+        'MONTHS_IN_THE_JOB': 40,
+        'PROFESSION_CODE': 11,
+        'OCCUPATION_TYPE': 1,
+        'PRODUCT': 2,
+        'AGE': 30,
+        'RESIDENCIAL_ZIP_3': None,
+        }
