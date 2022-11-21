@@ -4,6 +4,7 @@ $(document).ready(function(){
         var seleccion= $(this).children("option:selected").val();
         var array = seleccion.split('-');    
         $("#residencial_phone_area_code").val(array[1]);    
+        $("#residencial_zip_3").val(array[1]);            
         $("#residencial_state").val(array[0]);            
     });
 
@@ -45,11 +46,20 @@ $(document).ready(function(){
 
     $("#flag_has_job_chk").change(function(){
         $("#flag_has_job").val(0);    
-        $("#professional_data").hide();
-        if(this.checked){
+        $("#professional_data").hide();        
+        $("#professional_data2").hide();
+        if(this.checked){            
             $("#flag_has_job").val(1); 
             $("#professional_data").show();   
+            $("#professional_data2").show();   
         }
     });
+
+    $("select.professional_state_select").change(function(){        
+        var seleccion= $(this).children("option:selected").val();        
+        var array = seleccion.split('-');    
+        $("#professional_phone_area_code").val(array[1]);    
+        $("#professional_state").val(array[0]);            
+    });    
     
 });            

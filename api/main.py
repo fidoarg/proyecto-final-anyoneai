@@ -60,6 +60,15 @@ class Data:
     personal_assets_value: str = Form(...)
     quant_cars: str = Form(...)
     professional_state: str = Form(...)
+    flag_professional_phone: str = Form(...)
+    professional_phone_area_code: str = Form(...)
+    months_in_the_job: str = Form(...)
+    profession_code: str = Form(...)
+    occupation_type: str = Form(...)
+    product: str = Form(...)
+    age: str = Form(...)
+    residencial_zip_3: str = Form(...)
+
 
 @app.get("/application", response_class=HTMLResponse)
 async def application(request: Request,
@@ -80,6 +89,9 @@ async def application(request: Request,
                                           "residence_type": data_index_attr['residence_type'],
                                           "flag_email": data_index_attr['flag_email'],
                                           "professional_state": data_index_attr['professional_state'],
+                                          "profession_code": data_index_attr['profession_code'],
+                                          "occupation_type": data_index_attr['occupation_type'],
+                                          "product": data_index_attr['product'],
                                           
                                           })
 
@@ -116,14 +128,14 @@ async def score(request: Request,
         'QUANT_CARS': form_data.quant_cars,
         'COMPANY': form_data.company,
         'PROFESSIONAL_STATE': form_data.professional_state,
-        'FLAG_PROFESSIONAL_PHONE': 'N',
-        'PROFESSIONAL_PHONE_AREA_CODE': 384,
-        'MONTHS_IN_THE_JOB': 40,
-        'PROFESSION_CODE': 11,
-        'OCCUPATION_TYPE': 1,
-        'PRODUCT': 2,
-        'AGE': 30,
-        'RESIDENCIAL_ZIP_3': None,
+        'FLAG_PROFESSIONAL_PHONE': form_data.flag_professional_phone,
+        'PROFESSIONAL_PHONE_AREA_CODE': form_data.professional_phone_area_code,
+        'MONTHS_IN_THE_JOB': form_data.months_in_the_job,
+        'PROFESSION_CODE': form_data.profession_code,
+        'OCCUPATION_TYPE': form_data.occupation_type,
+        'PRODUCT': form_data.product,
+        'AGE': form_data.age,
+        'RESIDENCIAL_ZIP_3': form_data.residencial_zip_3,
         }
     prediction , score = model_predict(data)
 
