@@ -27,3 +27,8 @@
 | Add API tests (Optional) | You should add some tests to the API main components. |
 | Preview service to other teams | Demo the project to other teams and gather their feedback for final adjustments |
 | Build final presentation and prep for demo | Build your presentation and prepare your project for the Demo Day |
+
+### Directories:
+The project its distributed in the following folders:
+- data: no presented in the github, contains the dataset files.
+- notebooks: contains the notebooks for EDA, Feature Enginering and Models.
