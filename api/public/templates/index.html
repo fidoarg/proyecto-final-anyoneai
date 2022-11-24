@@ -35,7 +35,7 @@
                         </tr>
                         <tr>
                             <td><label for="postal_address_type">Postal Address:</label></td>
-                            <td>                    <select id="postal_address_type" name="postal_address_type">
+                            <td><select id="postal_address_type" name="postal_address_type">
                                 {% for value in postal_address_type %}
                                 <option value="{{ value.id }}">{{ value.description }}</option>
                                 {% endfor %}
@@ -46,8 +46,8 @@
                                 <option value="{{ value.id }}">{{ value.description }}</option>
                                 {% endfor %}
                             </select></td>
-                            <td><label for="marital_status">Number of Dependents:</label> </td>
-                            <td><input type="number" id="quant_dependants" name="quant_dependants" value="0"></td>                                                        
+                            <td><label for="quant_dependants">Number of Dependents:</label> </td>
+                            <td><input type="number" id="quant_dependants" name="quant_dependants" min="0" value="0"></td>                                                        
                         </tr>   
                         <tr>
                             <td><label for="state_of_birth">State of Birth:</label></td>
@@ -110,23 +110,23 @@
                         <tr>
                             <td><label for="flag_visa_chk">Visa Card:</label> </td>
                             <td><input type="checkbox" id="flag_visa_chk" name="flag_visa_chk" value="0"></td>
-                            <input type="hidden" id="flag_visa" name="flag_visa"> 
+                            <input type="hidden" id="flag_visa" name="flag_visa" value="0"> 
 
                             <td><label for="flag_mastercard_chk">Master Card:</label> </td>
                             <td><input type="checkbox" id="flag_mastercard_chk" name="flag_mastercard_chk" value="0"></td>
-                            <input type="hidden" id="flag_mastercard" name="flag_mastercard"> 
+                            <input type="hidden" id="flag_mastercard" name="flag_mastercard" value="0"> 
                             
                             <td><label for="flag_diners_chk">Diners Card:</label> </td>
                             <td><input type="checkbox" id="flag_diners_chk" name="flag_diners_chk" value="0"></td>
-                            <input type="hidden" id="flag_diners" name="flag_diners"> 
+                            <input type="hidden" id="flag_diners" name="flag_diners" value="0"> 
                             
                             <td><label for="flag_american_express_chk">American Express Card:</label> </td>
                             <td><input type="checkbox" id="flag_american_express_chk" name="flag_american_express_chk" value="0"></td>
-                            <input type="hidden" id="flag_american_express" name="flag_american_express"> 
+                            <input type="hidden" id="flag_american_express" name="flag_american_express" value="0"> 
                             
                             <td><label for="flag_other_cards_chk">Other Cards:</label> </td>
                             <td><input type="checkbox" id="flag_other_cards_chk" name="flag_other_cards_chk" value="0"></td>
-                            <input type="hidden" id="flag_other_cards" name="flag_other_cards">                             
+                            <input type="hidden" id="flag_other_cards" name="flag_other_cards" value="0">                             
                         </tr>
                         <tr>
                             <td><label for="quant_banking_accounts">Quant Banking Accounts:</label> </td>
@@ -138,7 +138,7 @@
                             
                         </tr>    
                         <tr>
-                            <td><label for="product">product:</label></td>
+                            <td><label for="product">Requested Product:</label></td>
                             <td><select id="product" name="product">
                                 {% for value in product %}
                                 <option value="{{ value.id }}">{{ value.description }}</option>                                
@@ -150,7 +150,7 @@
 
                             <td><label for="flag_has_job_chk">Has a Job:</label> </td>
                             <td><input type="checkbox" id="flag_has_job_chk" name="flag_has_job_chk" value="1"></td>
-                            <input type="hidden" id="flag_has_job" name="flag_has_job">                                                         
+                            <input type="hidden" id="flag_has_job" name="flag_has_job" value="0">                                                         
                         </tr>            
                         
                         <tr id="professional_data" hidden>  
@@ -164,7 +164,7 @@
                             <td>
                                 <label for="professional_phone_area_code">Professional Phone Area Code:</label>
                                 <input type="text" id="professional_phone_area_code" name="professional_phone_area_code">
-                                <input type="hidden" id="professional_state" name="professional_state">
+                                <input type="hidden" id="professional_state" name="professional_state" value="">
                             </td>                               
                             
                             <td><label for="flag_professional_phone">Professional Phone:</label></td>
@@ -179,14 +179,14 @@
                         </tr>                 
                         <tr id="professional_data2" hidden>  
                             <td><label for="profession_code">Profession Code:</label></td>
-                            <td><select id="profession_code" name="profession_code">
+                            <td><select class="profession_code" id="profession_code" name="profession_code">
                                 {% for value in profession_code %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>                                
+                                <option value="{{ value.id }}">{{ value.description }}</option>
                                 {% endfor %}
                             </select></td>  
                                             
                             <td><label for="occupation_type">Occupation Type:</label></td>
-                            <td><select id="occupation_type" name="occupation_type">
+                            <td><select class="occupation_type" id="occupation_type" name="occupation_type">
                                 {% for value in occupation_type %}
                                 <option value="{{ value.id }}">{{ value.description }}</option>                                
                                 {% endfor %}
@@ -196,7 +196,7 @@
                     </table>                                        
                 </div>
                 <p>
-                    <input type="submit" value="Submit">
+                    <input id="btn_submit" type="submit" value="Submit">
                 </p>
             </div>
         </form>
