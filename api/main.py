@@ -71,8 +71,7 @@ class Data:
 
 
 @app.get("/application", response_class=HTMLResponse)
-async def application(request: Request,
-                ):
+async def application(request: Request,):
 
     #if request.method == "GET":
     return templates.TemplateResponse(name="index.html",
@@ -91,11 +90,33 @@ async def application(request: Request,
                                           "professional_state": data_index_attr['professional_state'],
                                           "profession_code": data_index_attr['profession_code'],
                                           "occupation_type": data_index_attr['occupation_type'],
-                                          "product": data_index_attr['product'],
-                                          
-                                          })
+                                          "product": data_index_attr['product'],                                          
+                                    })
 
- #   if request.method == "POST":
+@app.get("/index2", response_class=HTMLResponse)
+async def index2(request: Request,):
+
+    #if request.method == "GET":
+    return templates.TemplateResponse(name="index2.html",
+                                          context={
+                                          "request": request,
+                                          "genders": data_index_attr['sex'],                                          
+                                          "company": data_index_attr['company'],
+                                          "payment_day": data_index_attr['payment_day'],
+                                          "postal_address_type": data_index_attr['postal_address_type'],
+                                          "marital_status": data_index_attr['marital_status'],
+                                          "state_of_birth": data_index_attr['state_of_birth'],
+                                          "nacionality": data_index_attr['nacionality'],
+                                          "residencial_state": data_index_attr['residencial_state'],
+                                          "residence_type": data_index_attr['residence_type'],
+                                          "flag_email": data_index_attr['flag_email'],
+                                          "professional_state": data_index_attr['professional_state'],
+                                          "profession_code": data_index_attr['profession_code'],
+                                          "occupation_type": data_index_attr['occupation_type'],
+                                          "product": data_index_attr['product'],                                          
+                                    })                                          
+
+
 @app.post("/score")#, response_class=HTMLResponse)
 async def score(request: Request,
                 form_data: Data = Depends(),
@@ -153,25 +174,25 @@ async def score(request: Request,
                                     context=context)
     #return response_prediction
 
-@app.get("/bootstraptest", response_class=HTMLResponse)
-async def bootstraptest(request: Request,
-                ):
+#@app.get("/bootstraptest", response_class=HTMLResponse)
+#async def bootstraptest(request: Request,
+#                ):
+
+#    #if request.method == "GET":
+#    return templates.TemplateResponse(name="email.html",
+#                                          context={
+#                                          "request": request                                          
+#                                          })       
+
+#@app.get("/prueba2", response_class=HTMLResponse)
+#async def prueba2(request: Request,
+#                ):
 
     #if request.method == "GET":
-    return templates.TemplateResponse(name="email.html",
-                                          context={
-                                          "request": request                                          
-                                          })       
-
-@app.get("/prueba2", response_class=HTMLResponse)
-async def prueba2(request: Request,
-                ):
-
-    #if request.method == "GET":
-    return templates.TemplateResponse(name="prueba2.html",
-                                          context={
-                                          "request": request                                          
-                                          })    
+#    return templates.TemplateResponse(name="prueba2.html",
+#                                          context={
+#                                          "request": request                                          
+#                                          })    
 
 @app.get("/prueba3", response_class=HTMLResponse)
 async def prueba3(request: Request,
@@ -182,3 +203,4 @@ async def prueba3(request: Request,
                                           context={
                                           "request": request                                          
                                           })                                            
+
