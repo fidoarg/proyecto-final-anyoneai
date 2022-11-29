@@ -14,8 +14,11 @@ from middleware import model_predict
 from pydantic import BaseModel, Field
 from pydantic.dataclasses import dataclass
 
+from routers import auth
+
 # Create API
 app = FastAPI()
+app.include_router(auth.router)
 
 #app.mount("/static", StaticFiles(directory="static"), name="static")
 
