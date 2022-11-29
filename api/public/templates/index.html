@@ -2,203 +2,407 @@
 <html>
     <head>
         <title>CREDIT RISK ANALYSIS API</title>
-        <link rel="stylesheet" href="/static/css/style.css"></link>
+        <link rel="stylesheet" href="/static/css/index.css"></link>
+        <link rel="stylesheet" href="/static/css/font-awesome.css"></link>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css"></link>
         <script src="/static/js/jquery.min.js"></script>
-        <script src="/static/js/script.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>        
+        <script src="/static/js/script.js"></script>        
     </head>
+    
     <body>
-        <h2>Fill the form to evaluate your credit score</h2>
-        <form method="post" action="/score">
-            <div class="form-group">
-                <div class="input-group">
-                    <table>
-                        <input type="hidden" id="application_submission_type" name="application_submission_type" value="Web">
-                        <tr>
-                            <td><label for="sex">Gender:</label></td>
-                            <td><select id="sex" name="sex">
-                                {% for value in genders %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>                            
-                            <td><label for="company">Company:</label></td>
-                            <td><select id="company" name="company">
-                                {% for value in company %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>                            
-                            <td><label for="payment_day">Payment Day:</label></td>
-                            <td><select id="payment_day" name="payment_day">
-                                {% for value in payment_day %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>                            
-                        </tr>
-                        <tr>
-                            <td><label for="postal_address_type">Postal Address:</label></td>
-                            <td><select id="postal_address_type" name="postal_address_type">
-                                {% for value in postal_address_type %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>
-                            <td><label for="marital_status">Marital Status:</label></td>
-                            <td><select id="marital_status" name="marital_status">
-                                {% for value in marital_status %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>
-                            <td><label for="quant_dependants">Number of Dependents:</label> </td>
-                            <td><input type="number" id="quant_dependants" name="quant_dependants" min="0" value="0"></td>                                                        
-                        </tr>   
-                        <tr>
-                            <td><label for="state_of_birth">State of Birth:</label></td>
-                            <td><select id="state_of_birth" name="state_of_birth">
-                                {% for value in state_of_birth %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>
-                            <td><label for="nacionality">Nacionality:</label></td>
-                            <td><select id="nacionality" name="nacionality">
-                                {% for value in nacionality %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>                        
-                            <td><label for="residencial_state">Residencial State:</label></td>
-                            <td><select class="residencial_state_select" id="residencial_state_select" name="residencial_state_select">
-                                {% for value in residencial_state %}
-                                <option value="{{ value.id }}-{{ value.code_area }}">{{ value.description }}</option>                                
-                                {% endfor %}
-                            </select></td>  
-                            <td>
-                                <label for="residencial_phone_area_code">Phone Area Code:</label>
-                                <input type="text" id="residencial_phone_area_code" name="residencial_phone_area_code">
-                                <input type="hidden" id="residencial_state" name="residencial_state">
-                                <input type="hidden" id="residencial_zip_3" name="residencial_zip_3">                                
-                            </td>                          
-                        </tr> 
-                        <tr>
-                            <td>
-                                <label for="flag_residencial_phone">Residencial Phone:</label>
-                            </td>
-                            <td>
-                                <input type="radio" id="flag_residencial_phone_yes" name="flag_residencial_phone" value="Y">
-                                <label for="yes">Yes</label>
-                                <input type="radio" id="flag_residencial_phone_no" name="flag_residencial_phone" value="N">
-                                <label for="not">No</label>                                
-                            </td>
-                            <td><label for="residence_type">Residence Type:</label></td>
-                            <td><select class="residence_type" id="residence_type" name="residence_type">
-                                {% for value in residence_type %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>                                
-                                {% endfor %}
-                            </select></td>  
-                            <td><label for="months_in_residence">Months in Residence:</label> </td>
-                            <td><input type="number" id="months_in_residence" name="months_in_residence" min="0" value="0"></td> 
-                        </tr>
-                        <tr>
-                            <td><label for="flag_email">Email:</label></td>
-                            <td>
-                                <input type="radio" id="flag_email_yes" name="flag_email" value="1">
-                                <label for="yes">Yes</label>
-                                <input type="radio" id="flag_email_no" name="flag_email" value="0">
-                                <label for="not">No</label>                                
-                            </td>     
-                            <td><label for="personal_monthly_income">Personal Monthly Income:</label> </td>
-                            <td><input type="number" id="personal_monthly_income" name="personal_monthly_income" min="0" value="0"></td>
-                            <td><label for="other_incomes">Other Incomes:</label> </td>
-                            <td><input type="number" id="other_incomes" name="other_incomes" min="0" value="0"></td>                            
-                        </tr>
-                        <tr>
-                            <td><label for="flag_visa_chk">Visa Card:</label> </td>
-                            <td><input type="checkbox" id="flag_visa_chk" name="flag_visa_chk" value="0"></td>
-                            <input type="hidden" id="flag_visa" name="flag_visa" value="0"> 
-
-                            <td><label for="flag_mastercard_chk">Master Card:</label> </td>
-                            <td><input type="checkbox" id="flag_mastercard_chk" name="flag_mastercard_chk" value="0"></td>
-                            <input type="hidden" id="flag_mastercard" name="flag_mastercard" value="0"> 
-                            
-                            <td><label for="flag_diners_chk">Diners Card:</label> </td>
-                            <td><input type="checkbox" id="flag_diners_chk" name="flag_diners_chk" value="0"></td>
-                            <input type="hidden" id="flag_diners" name="flag_diners" value="0"> 
-                            
-                            <td><label for="flag_american_express_chk">American Express Card:</label> </td>
-                            <td><input type="checkbox" id="flag_american_express_chk" name="flag_american_express_chk" value="0"></td>
-                            <input type="hidden" id="flag_american_express" name="flag_american_express" value="0"> 
-                            
-                            <td><label for="flag_other_cards_chk">Other Cards:</label> </td>
-                            <td><input type="checkbox" id="flag_other_cards_chk" name="flag_other_cards_chk" value="0"></td>
-                            <input type="hidden" id="flag_other_cards" name="flag_other_cards" value="0">                             
-                        </tr>
-                        <tr>
-                            <td><label for="quant_banking_accounts">Quant Banking Accounts:</label> </td>
-                            <td><input type="number" id="quant_banking_accounts" name="quant_banking_accounts" min="0" max="10" value="0"></td>                                                                                    
-                            <td><label for="personal_assets_value">Personal Assets Value:</label> </td>
-                            <td><input type="number" id="personal_assets_value" name="personal_assets_value" min="0" value="0"></td>
-                            <td><label for="quant_cars">Quant cars:</label> </td>
-                            <td><input type="number" id="quant_cars" name="quant_cars" min="0" value="0"></td>                                                                                                                
-                            
-                        </tr>    
-                        <tr>
-                            <td><label for="product">Requested Product:</label></td>
-                            <td><select id="product" name="product">
-                                {% for value in product %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>                                
-                                {% endfor %}
-                            </select></td>   
-
-                            <td><label for="age">Age:</label> </td>
-                            <td><input type="number" id="age" name="age" min="0" value="0"></td>
-
-                            <td><label for="flag_has_job_chk">Has a Job:</label> </td>
-                            <td><input type="checkbox" id="flag_has_job_chk" name="flag_has_job_chk" value="1"></td>
-                            <input type="hidden" id="flag_has_job" name="flag_has_job" value="0">                                                         
-                        </tr>            
+        <div class="container-fluid px-1 py-5 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                    <h1><p class="blue-text">Credit Risk Analysis</p></h1>
+                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit scope.</p>
+                    <div class="card">
                         
-                        <tr id="professional_data" hidden>  
-                            <td><label for="professional_state_select">Professional State:</label></td>
-                            <td><select class="professional_state_select" id="professional_state_select" name="professional_state_select">
-                                {% for value in professional_state %}
-                                <option value="{{ value.id }}-{{ value.code_area }}">{{ value.description }}</option>                                
-                                {% endfor %}
-                            </select></td>  
+                        <form class="form-card" method="post" action="/score">
 
-                            <td>
-                                <label for="professional_phone_area_code">Professional Phone Area Code:</label>
-                                <input type="text" id="professional_phone_area_code" name="professional_phone_area_code">
-                                <input type="hidden" id="professional_state" name="professional_state" value="">
-                            </td>                               
+<!--#################################################################################################-->
+<!--################################    CREDIT DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div><h5 class="text-center mb-4">Credit Data</h5></div>
+                            <input type="hidden" id="application_submission_type" name="application_submission_type" value="Web">
+
+                            <div class="row justify-content-between text-left">     
+<!--   
+                                <div hidden class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Requested Product                                                            
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="product" name="product" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in product %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg15" style="color: red;"></span>                                   
+                                </div>   
+-->    
+                                <div class="form-group col-sm-6 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Credit Amount<span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="credit_amount" name="credit_amount" placeholder="Enter Credit Amount">
+                                    <span id="errmsg10" style="color: red;"></span>  
+                                </div>  
+                                
+                                <div class="form-group col-sm-6 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Months of Credit Term<span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="months_term" name="months_term" placeholder="Enter months of term">                                         
+                                    <span id="errmsg11" style="color: red;"></span>  
+                                </div>  
+
+                            </div>
+
+<!--#################################################################################################-->
+<!--################################    PERSONAL DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div><h5 class="text-center mb-4">Personal Data</h5></div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="first_name" name="first_name" placeholder="Enter your first name" onblur="validate(1)"> 
+                                    <span id="errmsg16" style="color: red;"></span>  
+                                </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name" onblur="validate(2)"> 
+                                    <span id="errmsg17" style="color: red;"></span>  
+                                </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Age
+                                    <span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="age" name="age" placeholder="Enter your Age" maxlength="2">                                                                             
+                                    <span id="errmsg9" style="color: red;"></span>  
+                                </div>                                
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Gender
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="sex" name="sex" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in genders %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg14" style="color: red;"></span>  
+                                </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Nacionality
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="nacionality" name="nacionality" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in nacionality %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg18" style="color: red;"></span>  
+                                </div>                                
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Marital Status
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="marital_status" name="marital_status" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in marital_status %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg19" style="color: red;"></span> 
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Postal Address Type
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="postal_address_type" name="postal_address_type" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in postal_address_type %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg20" style="color: red;"></span> 
+                                </div>                                
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Number of Dependents
+                                    <span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="quant_dependants" name="quant_dependants" placeholder="Enter number of dependents" maxlength="2">                                         
+                                    <span id="errmsg1" style="color: red;"></span>                
+                                </div>
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial State
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="residencial_state_select" name="residencial_state_select" class="residencial_state_select form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in residencial_state %}
+                                        <option value="{{ value.id }}-{{ value.code_area }}">{{ value.description }}</option>                                
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg21" style="color: red;"></span> 
+                                </div>           
+                                <input type="hidden" id="residencial_state" name="residencial_state">
+                                <input type="hidden" id="residencial_zip_3" name="residencial_zip_3">                                                               
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Residencial Phone Area Code<span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="residencial_phone_area_code" name="residencial_phone_area_code" placeholder="Enter residencial phone area code">                                         
+                                    <span id="errmsg2" style="color: red;"></span>                
+                                </div> 
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial Type
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="residence_type" name="residence_type" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in residence_type %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg22" style="color: red;"></span>                
+                                </div>         
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Months in Residence<span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="months_in_residence" name="months_in_residence" placeholder="Enter months in residence">                                         
+                                    <span id="errmsg3" style="color: red;"></span>
+                                </div>                                                                                                     
+                            </div>                            
+
+                            <div class="row justify-content-between text-left">
+                                <div hidden class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">State of Birth
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="state_of_birth" name="state_of_birth" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in state_of_birth %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg23" style="color: red;"></span>
+                                </div>                                  
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial Phone
+                                    <span class="text-danger"> *</span></label>                                 
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flag_residencial_phone" id="flag_residencial_phone_yes" value="Y">
+                                        <label class="form-check-label" for="flag_residencial_phone_yes">
+                                        Yes
+                                        </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="flag_residencial_phone" id="flag_residencial_phone_no" value="N">
+                                        <label class="form-check-label" for="flag_residencial_phone_no">
+                                        No
+                                        </label>                                    
+                                        <span id="errmsg24" style="color: red;"></span>
+                                    </div>
+                                </div>                                 
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Personal Email
+                                    <span class="text-danger"> *</span></label>                                 
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flag_email" id="flag_email_yes" value="1">
+                                        <label class="form-check-label" for="flag_email_yes">
+                                        Yes
+                                        </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="flag_email" id="flag_email_no" value="0">
+                                        <label class="form-check-label" for="flag_email_no">
+                                        No
+                                        </label>                                    
+                                        <span id="errmsg25" style="color: red;"></span>
+                                    </div>
+                                </div>                                 
+                                                              
+                            </div>
+                                                        
+<!--#################################################################################################-->
+<!--###############################    FINALCIAL DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div><h5 class="text-center mb-4">Financial Data</h5></div>
+
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Personal Monthly Income<span class="text-danger"> *</span></label>                                     
+                                    <input type="text" id="personal_monthly_income" name="personal_monthly_income" placeholder="Enter personal monthly income">
+                                    <span id="errmsg4" style="color: red;"></span>
+                                </div>  
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Personal Other Incomes<span class="text-danger"> </span></label>
+                                    <input type="text" id="other_incomes" name="other_incomes" placeholder="Enter personal others incomes">
+                                    <span id="errmsg5" style="color: red;"></span>
+                                </div>    
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Quant Banking Accounts<span class="text-danger"> </span></label>
+                                    <input type="text" id="quant_banking_accounts" name="quant_banking_accounts" placeholder="Enter quant banking accounts">
+                                    <span id="errmsg6" style="color: red;"></span>
+                                </div>                                                                    
+                            </div>   
                             
-                            <td><label for="flag_professional_phone">Professional Phone:</label></td>
-                            <td>
-                                <input type="radio" id="flag_professional_phone_yes" name="flag_professional_phone" value="Y">
-                                <label for="yes">Yes</label>
-                                <input type="radio" id="flag_professional_phone_no" name="flag_professional_phone" value="N">
-                                <label for="not">No</label>                                
-                            </td>                              
-                            <td><label for="months_in_the_job">Months in the job:</label> </td>
-                            <td><input type="number" id="months_in_the_job" name="months_in_the_job" min="0" value="0"></td>                                                        
-                        </tr>                 
-                        <tr id="professional_data2" hidden>  
-                            <td><label for="profession_code">Profession Code:</label></td>
-                            <td><select class="profession_code" id="profession_code" name="profession_code">
-                                {% for value in profession_code %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>
-                                {% endfor %}
-                            </select></td>  
-                                            
-                            <td><label for="occupation_type">Occupation Type:</label></td>
-                            <td><select class="occupation_type" id="occupation_type" name="occupation_type">
-                                {% for value in occupation_type %}
-                                <option value="{{ value.id }}">{{ value.description }}</option>                                
-                                {% endfor %}
-                            </select></td>  
+                            <div class="row justify-content-between text-left">                           
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Personal Assets Value<span class="text-danger"> </span></label>
+                                    <input type="text" id="personal_assets_value" name="personal_assets_value" placeholder="Enter quant banking accounts">
+                                    <span id="errmsg7" style="color: red;"></span>
+                                </div>               
+                                <div class="form-group col-sm-4 flex-column d-flex"> 
+                                    <label class="form-control-label px-3">Quant Cars<span class="text-danger"> </span></label>
+                                    <input type="text" id="quant_cars" name="quant_cars" placeholder="Enter quant cars">
+                                    <span id="errmsg8" style="color: red;"></span>
+                                </div>   
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Has a Job
+                                    <span class="text-danger"> *</span></label>                                 
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flag_has_job" id="flag_has_job_yes" value="1">
+                                        <label class="form-check-label" for="flag_has_job_yes">
+                                        Yes
+                                        </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input class="form-check-input" type="radio" name="flag_has_job" id="flag_has_job_no" value="0">
+                                        <label class="form-check-label" for="flag_has_job_no">
+                                        No
+                                        </label>  
+                                        <span id="errmsg32" style="color: red;"></span>
+                                    </div>
+                                </div>                                                                                                                                                                                                         
+                            </div>                            
 
-                        </tr>
-                    </table>                                        
+                            <div class="row justify-content-between text-left">
+                                <div class="form-check form-group col-sm-4 flex-column d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_visa_chk">
+                                        <input type="hidden" id="flag_visa" name="flag_visa" value="0"> 
+                                        <label class="form-check-label" for="flag_visa">
+                                        Visa Card
+                                        </label>
+                                        <br>
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_mastercard_chk">
+                                        <input type="hidden" id="flag_mastercard" name="flag_mastercard" value="0"> 
+                                        <label class="form-check-label" for="flag_mastercard">
+                                        Master Card
+                                        </label>
+                                    </div>
+                                </div>
+                            
+                                <div class="form-check form-group col-sm-4 flex-column d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_mastercard_chk">
+                                        <input type="hidden" id="flag_mastercard" name="flag_mastercard" value="0"> 
+                                        <label class="form-check-label" for="flag_mastercard">
+                                        Diners Card
+                                        </label>
+                                        <br>
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_diners_chk">
+                                        <input type="hidden" id="flag_diners" name="flag_diners" value="0"> 
+                                        <label class="form-check-label" for="flag_diners">
+                                        Master Card
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-group col-sm-4 flex-column d-flex">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_american_express_chk">
+                                        <input type="hidden" id="flag_american_express" name="flag_american_express" value="0"> 
+                                        <label class="form-check-label" for="flag_american_express">
+                                        American Express
+                                        </label>
+                                        <br>
+                                        <input class="form-check-input" type="checkbox" value="0" id="flag_other_cards_chk">
+                                        <input type="hidden" id="flag_other_cards" name="flag_other_cards" value="0"> 
+                                        <label class="form-check-label" for="flag_other_cards">
+                                        Other Cards
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>                            
+
+<!--#################################################################################################-->
+<!--#####################################    JOB DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div class="job_data_information" id="job_data_information" name="job_data_information">
+                                <div><h5 class="text-center mb-4">Job Data</h5></div>
+
+                                
+                                <div class="row justify-content-between text-left">
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Company
+                                        <span class="text-danger"> *</span></label> 
+                                        <select id="company" name="company" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                            {% for value in company %}
+                                            <option value="{{ value.id }}">{{ value.description }}</option>
+                                            {% endfor %}                                        
+                                        </select>
+                                        <span id="errmsg26" style="color: red;"></span>
+                                    </div>
+
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Payment Day
+                                        <span class="text-danger"> *</span></label> 
+                                        <select id="payment_day" name="payment_day" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                            {% for value in payment_day %}
+                                            <option value="{{ value.id }}">{{ value.description }}</option>
+                                            {% endfor %}                                        
+                                        </select>
+                                        <span id="errmsg27" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group col-sm-4 flex-column d-flex"> 
+                                        <label class="form-control-label px-3">Months in the Job<span class="text-danger"> *</span></label>                                     
+                                        <input type="text" id="months_in_the_job" name="months_in_the_job" placeholder="Enter Months in the Job">
+                                        <span id="errmsg13" style="color: red;"></span>                   
+                                    </div>   
+                                </div>
+                                
+                                <div class="row justify-content-between text-left">
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Professional State
+                                        <span class="text-danger"> *</span></label> 
+                                        <select id="professional_state_select" name="professional_state_select" class="professional_state_select form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                            {% for value in professional_state %}                                            
+                                            <option value="{{ value.id }}-{{ value.code_area }}">{{ value.description }}</option>                                
+                                            {% endfor %}                                        
+                                        </select>
+                                        <span id="errmsg28" style="color: red;"></span>
+                                        <input type="hidden" id="professional_state" name="professional_state" value="">
+                                    </div>                                    
+                                    <div class="form-group col-sm-4 flex-column d-flex"> 
+                                        <label class="form-control-label px-3">Professional Phone Area Code<span class="text-danger"> </span></label>
+                                        <input type="text" id="professional_phone_area_code" name="professional_phone_area_code" placeholder="Enter professional phone area code">
+                                        <span id="errmsg12" style="color: red;"></span>
+                                    </div>   
+                                       
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Professional Phone
+                                        <span class="text-danger"> *</span></label>                                 
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flag_professional_phone" id="flag_professional_phone_yes" value="Y">
+                                            <label class="form-check-label" for="flag_professional_phone_yes">
+                                            Yes
+                                            </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input class="form-check-input" type="radio" name="flag_professional_phone" id="flag_professional_phone_no" value="N">
+                                            <label class="form-check-label" for="flag_professional_phone_no">
+                                            No
+                                            </label>                                    
+                                            <span id="errmsg29" style="color: red;"></span>
+                                        </div>
+                                    </div>  
+                                </div>
+<!--
+                                <div class="row justify-content-between text-left">
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Professional Code
+                                        <span class="text-danger"> *</span></label> 
+                                        <select id="profession_code" name="profession_code" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                            {% for value in profession_code %}
+                                            <option value="{{ value.id }}">{{ value.description }}</option>
+                                            {% endfor %}                                        
+                                        </select>
+                                        <span id="errmsg30" style="color: red;"></span>
+                                    </div>                                    
+                                    <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Occupation Type
+                                        <span class="text-danger"> *</span></label> 
+                                        <select id="occupation_type" name="occupation_type" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                            {% for value in occupation_type %}
+                                            <option value="{{ value.id }}">{{ value.description }}</option>
+                                            {% endfor %}                                        
+                                        </select>
+                                        <span id="errmsg31" style="color: red;"></span>
+                                    </div>
+                                    <div class="form-group col-sm-4 flex-column d-flex"> 
+
+                                    </div>                                    
+                                </div>
+-->                                
+                                <!--
+                                <div class="row justify-content-between text-left">
+                                    <div class="form-group col-12 flex-column d-flex"> <label class="form-control-label px-3">Comments?<span class="text-danger"> *</span></label> <input type="text" id="ans" name="ans" placeholder="" onblur="validate(6)"> </div>
+                                </div>-->
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="form-group col-sm-6"> 
+                                    <button type="submit" id="btn_submit" class="btn-block btn-primary">Request a credit</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <p>
-                    <input id="btn_submit" type="submit" value="Submit">
-                </p>
             </div>
-        </form>
+        </div>
     </body>
 </html>

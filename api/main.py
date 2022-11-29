@@ -63,9 +63,9 @@ class Data:
     flag_professional_phone: str = Form(...)
     professional_phone_area_code: str = Form(...)
     months_in_the_job: str = Form(...)
-    profession_code: str = Form(...)
-    occupation_type: str = Form(...)
-    product: str = Form(...)
+    #profession_code: str = Form(...)
+    #occupation_type: str = Form(...)
+    #product: str = Form(...)
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
 
@@ -93,11 +93,11 @@ async def application(request: Request,):
                                           "product": data_index_attr['product'],                                          
                                     })
 
-@app.get("/index2", response_class=HTMLResponse)
+@app.get("/index", response_class=HTMLResponse)
 async def index2(request: Request,):
 
     #if request.method == "GET":
-    return templates.TemplateResponse(name="index2.html",
+    return templates.TemplateResponse(name="index.html",
                                           context={
                                           "request": request,
                                           "genders": data_index_attr['sex'],                                          
@@ -118,10 +118,7 @@ async def index2(request: Request,):
 
 
 @app.post("/score")#, response_class=HTMLResponse)
-async def score(request: Request,
-                form_data: Data = Depends(),
-                ):
-        
+async def score(request: Request,form_data: Data = Depends(),):        
     data = {
         'PAYMENT_DAY': form_data.payment_day,
         'APPLICATION_SUBMISSION_TYPE': form_data.application_submission_type,
@@ -152,15 +149,16 @@ async def score(request: Request,
         'FLAG_PROFESSIONAL_PHONE': form_data.flag_professional_phone,
         'PROFESSIONAL_PHONE_AREA_CODE': form_data.professional_phone_area_code,
         'MONTHS_IN_THE_JOB': form_data.months_in_the_job,
-        'PROFESSION_CODE': form_data.profession_code,
-        'OCCUPATION_TYPE': form_data.occupation_type,
-        'PRODUCT': form_data.product,
+        #'PROFESSION_CODE': form_data.profession_code,
+        #'OCCUPATION_TYPE': form_data.occupation_type,
+        #'PRODUCT': form_data.product,
+        'PROFESSION_CODE': 'NONE',
+        'OCCUPATION_TYPE': 'NONE',
+        'PRODUCT': 'NONE',        
         'AGE': form_data.age,
         'RESIDENCIAL_ZIP_3': form_data.residencial_zip_3,
         }
     prediction , score = model_predict(data)
-
-    #response_prediction = {'prediction':prediction,'score':score}
 
     context = {
         "request": request,
@@ -172,34 +170,13 @@ async def score(request: Request,
 
     return templates.TemplateResponse(name="score.html",
                                     context=context)
-    #return response_prediction
 
-#@app.get("/bootstraptest", response_class=HTMLResponse)
-#async def bootstraptest(request: Request,
-#                ):
-
-#    #if request.method == "GET":
-#    return templates.TemplateResponse(name="email.html",
-#                                          context={
-#                                          "request": request                                          
-#                                          })       
-
-#@app.get("/prueba2", response_class=HTMLResponse)
-#async def prueba2(request: Request,
-#                ):
-
-    #if request.method == "GET":
-#    return templates.TemplateResponse(name="prueba2.html",
-#                                          context={
-#                                          "request": request                                          
-#                                          })    
-
-@app.get("/prueba3", response_class=HTMLResponse)
+@app.get("/index", response_class=HTMLResponse)
 async def prueba3(request: Request,
                 ):
 
     #if request.method == "GET":
-    return templates.TemplateResponse(name="prueba3.html",
+    return templates.TemplateResponse(name="index.html",
                                           context={
                                           "request": request                                          
                                           })                                            

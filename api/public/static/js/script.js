@@ -1,6 +1,5 @@
 $(document).ready(function(){        
-    $("select.residencial_state_select").change(function(){
-        alert("entro1")
+    $("select.residencial_state_select").change(function(){        
         var seleccion= $(this).children("option:selected").val();
         var array = seleccion.split('-');    
         $("#residencial_phone_area_code").val(array[1]);    
@@ -55,8 +54,7 @@ $(document).ready(function(){
         }
     });
 
-    $("select.professional_state_select").change(function(){      
-        alert("entro2")  
+    $("select.professional_state_select").change(function(){              
         var seleccion= $(this).children("option:selected").val();        
         var array = seleccion.split('-');    
         $("#professional_phone_area_code").val(array[1]);    
@@ -305,9 +303,12 @@ $(document).ready(function(){
         }else{
             $("#professional_state").val("NONE").change();
             $("#flag_professional_phone_no").attr('checked', 'checked');
-            $("#professional_phone_area_code").val('');        
+            $("#professional_phone_area_code").val('NONE');        
             $("#profession_code").val("NONE").change();
-            $("#occupation_type").val("NONE").change();        
+            $("#occupation_type").val("NONE").change();  
+            $("#company").val("N").change();              
+            $("#payment_day").val("NONE").change();        
+            $("#months_in_the_job").val('0');              
             $("#flag_has_job_chk").val('0'); 
         }                      
     });
