@@ -14,6 +14,8 @@ from middleware import model_predict
 from pydantic import BaseModel, Field
 from pydantic.dataclasses import dataclass
 
+from routers import auth
+
 # Create API
 app = FastAPI(title="Credit Risk Analysis API",
               description="Final Project of the Machine Learning Engineer Program",
