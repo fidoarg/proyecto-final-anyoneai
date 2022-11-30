@@ -21,6 +21,9 @@ app = FastAPI(title="Credit Risk Analysis API",
               description="Final Project of the Machine Learning Engineer Program",
               version="1.0.1")
 
+# Include authentication router
+app.include_router(auth.router)
+
 # Define public directory
 app.mount("/static",StaticFiles(directory="./public/static"), name="static")
 
@@ -75,8 +78,9 @@ class Data:
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
 
+@app.post("/index", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
-async def index(request: Request,):
+async def index(request: Request = Depends(auth.verify_user_token)):
 
     context = {
         "request": request,
