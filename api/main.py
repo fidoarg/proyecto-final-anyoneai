@@ -139,24 +139,14 @@ async def score(request: Request,form_data: Data = Depends(),):
 
     context = {
         "request": request,
-        "prediction": 1,
-        "score": 70,
+        #"prediction": 1,
+        #"score": 70,
+        "prediction": prediction,
+        "score": score,        
         "first_name":form_data.first_name,
         "last_name":form_data.last_name
     }      
 
 
     return templates.TemplateResponse(name="score.html",
-                                    context=context)
-                                          
-
-@app.get("/login")#, response_class=HTMLResponse)
-async def login(request: Request):        
-
-    context = {
-        "request": request
-    }      
-
-
-    return templates.TemplateResponse(name="login.html",
                                     context=context)
