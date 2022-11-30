@@ -69,52 +69,27 @@ class Data:
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
 
-
-@app.get("/application", response_class=HTMLResponse)
-async def application(request: Request,):
-
-    #if request.method == "GET":
-    return templates.TemplateResponse(name="index.html",
-                                          context={
-                                          "request": request,
-                                          "genders": data_index_attr['sex'],                                          
-                                          "company": data_index_attr['company'],
-                                          "payment_day": data_index_attr['payment_day'],
-                                          "postal_address_type": data_index_attr['postal_address_type'],
-                                          "marital_status": data_index_attr['marital_status'],
-                                          "state_of_birth": data_index_attr['state_of_birth'],
-                                          "nacionality": data_index_attr['nacionality'],
-                                          "residencial_state": data_index_attr['residencial_state'],
-                                          "residence_type": data_index_attr['residence_type'],
-                                          "flag_email": data_index_attr['flag_email'],
-                                          "professional_state": data_index_attr['professional_state'],
-                                          "profession_code": data_index_attr['profession_code'],
-                                          "occupation_type": data_index_attr['occupation_type'],
-                                          "product": data_index_attr['product'],                                          
-                                    })
-
 @app.get("/index", response_class=HTMLResponse)
-async def index2(request: Request,):
+async def index(request: Request,):
 
-    #if request.method == "GET":
+    context={"request": request,
+            "genders": data_index_attr['sex'],                                          
+            "company": data_index_attr['company'],
+            "payment_day": data_index_attr['payment_day'],
+            "postal_address_type": data_index_attr['postal_address_type'],
+            "marital_status": data_index_attr['marital_status'],
+            "state_of_birth": data_index_attr['state_of_birth'],
+            "nacionality": data_index_attr['nacionality'],
+            "residencial_state": data_index_attr['residencial_state'],
+            "residence_type": data_index_attr['residence_type'],
+            "flag_email": data_index_attr['flag_email'],
+            "professional_state": data_index_attr['professional_state'],
+            "profession_code": data_index_attr['profession_code'],
+            "occupation_type": data_index_attr['occupation_type'],
+            "product": data_index_attr['product'],}
+
     return templates.TemplateResponse(name="index.html",
-                                          context={
-                                          "request": request,
-                                          "genders": data_index_attr['sex'],                                          
-                                          "company": data_index_attr['company'],
-                                          "payment_day": data_index_attr['payment_day'],
-                                          "postal_address_type": data_index_attr['postal_address_type'],
-                                          "marital_status": data_index_attr['marital_status'],
-                                          "state_of_birth": data_index_attr['state_of_birth'],
-                                          "nacionality": data_index_attr['nacionality'],
-                                          "residencial_state": data_index_attr['residencial_state'],
-                                          "residence_type": data_index_attr['residence_type'],
-                                          "flag_email": data_index_attr['flag_email'],
-                                          "professional_state": data_index_attr['professional_state'],
-                                          "profession_code": data_index_attr['profession_code'],
-                                          "occupation_type": data_index_attr['occupation_type'],
-                                          "product": data_index_attr['product'],                                          
-                                    })                                          
+                                          context=context)                                          
 
 
 @app.post("/score")#, response_class=HTMLResponse)
@@ -170,14 +145,5 @@ async def score(request: Request,form_data: Data = Depends(),):
 
     return templates.TemplateResponse(name="score.html",
                                     context=context)
-
-@app.get("/index", response_class=HTMLResponse)
-async def prueba3(request: Request,
-                ):
-
-    #if request.method == "GET":
-    return templates.TemplateResponse(name="index.html",
-                                          context={
-                                          "request": request                                          
-                                          })                                            
+                                          
 
