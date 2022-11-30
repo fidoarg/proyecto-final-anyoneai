@@ -9,8 +9,8 @@ ADD ./ /src/
 
 WORKDIR /src
 
-#FROM base as test
-#RUN ["pytest", "-v", "/src/tests"]
+FROM base as test
+RUN ["pytest", "-v", "/src/tests"]
 
 FROM base as build
 ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
