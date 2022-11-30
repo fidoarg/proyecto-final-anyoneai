@@ -1,5 +1,12 @@
 
-$(function () {
+$(function () {    
+    name_applicant = $("#first_name").val()+" "+$("#last_name").val()
+    $("#name_applicant").text(name_applicant);
+    $("#gauge3").gauge($("#score").val(), { color: "#8BC34A", unit: " Score", font: "560px verdana" }); 
+
+    $("#btn_return").click(function(){        
+        window.location.href = "/index";
+    }); 
 
     var Speedometer = $('#speedometer').SonicGauge({
         label: 'Score Credit',

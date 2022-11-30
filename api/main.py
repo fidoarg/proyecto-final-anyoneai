@@ -68,6 +68,8 @@ class Data:
     #product: str = Form(...)
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
+    first_name: str = Form(...)
+    last_name: str = Form(...)
 
 @app.get("/index", response_class=HTMLResponse)
 async def index(request: Request,):
@@ -94,7 +96,7 @@ async def index(request: Request,):
 
 @app.post("/score")#, response_class=HTMLResponse)
 async def score(request: Request,form_data: Data = Depends(),):        
-    data = {
+    data = {        
         'PAYMENT_DAY': form_data.payment_day,
         'APPLICATION_SUBMISSION_TYPE': form_data.application_submission_type,
         'POSTAL_ADDRESS_TYPE': form_data.postal_address_type,
@@ -138,12 +140,23 @@ async def score(request: Request,form_data: Data = Depends(),):
     context = {
         "request": request,
         "prediction": 1,
-        "score": 500,        
-        "data": data
-        #"score": score
+        "score": 70,
+        "first_name":form_data.first_name,
+        "last_name":form_data.last_name
     }      
+
 
     return templates.TemplateResponse(name="score.html",
                                     context=context)
                                           
 
+@app.get("/login")#, response_class=HTMLResponse)
+async def login(request: Request):        
+
+    context = {
+        "request": request
+    }      
+
+
+    return templates.TemplateResponse(name="login.html",
+                                    context=context)
