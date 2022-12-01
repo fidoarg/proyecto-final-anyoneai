@@ -1,3 +1,4 @@
+import uvicorn
 import json
 
 # Fast API utilities
@@ -6,16 +7,22 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+# Function to send and receive ml jobs
 from middleware import model_predict
 
-# Pydantic tilities
+# Pydantic utilities
 from pydantic import BaseModel, Field
 from pydantic.dataclasses import dataclass
 
+from routers import auth
+
 # Create API
 app = FastAPI(title="Credit Risk Analysis API",
-                description="Final Project of the Machine Learning Engineer Program",
-                version="1.0.1")
+              description="Final Project of the Machine Learning Engineer Program",
+              version="1.0.1")
+
+# Include authentication router
+app.include_router(auth.router)
 
 # Define public directory
 app.mount("/static",StaticFiles(directory="./public/static"), name="static")
@@ -25,13 +32,15 @@ templates = Jinja2Templates(directory="./public/templates")
 
 # Opening JSON file
 f = open('./public/static/json/index_attr.json')
-  
-# returns JSON object as 
+
+# returns JSON object as
 # a dictionary
 data_index_attr = json.load(f)
 
 #%% Models
 
+
+# Application
 @dataclass
 class Data:
     sex: str = Form(...)
@@ -63,40 +72,48 @@ class Data:
     flag_professional_phone: str = Form(...)
     professional_phone_area_code: str = Form(...)
     months_in_the_job: str = Form(...)
-    #profession_code: str = Form(...)
-    #occupation_type: str = Form(...)
-    #product: str = Form(...)
+    # profession_code: str = Form(...)
+    # occupation_type: str = Form(...)
+    # product: str = Form(...)
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
     first_name: str = Form(...)
-    last_name: str = Form(...)
+    last_name: str = Form(...)    
 
+@app.post("/index", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
-async def index(request: Request,):
+async def index(request: Request = Depends(auth.verify_user_token)):
 
-    context={"request": request,
-            "genders": data_index_attr['sex'],                                          
-            "company": data_index_attr['company'],
-            "payment_day": data_index_attr['payment_day'],
-            "postal_address_type": data_index_attr['postal_address_type'],
-            "marital_status": data_index_attr['marital_status'],
-            "state_of_birth": data_index_attr['state_of_birth'],
-            "nacionality": data_index_attr['nacionality'],
-            "residencial_state": data_index_attr['residencial_state'],
-            "residence_type": data_index_attr['residence_type'],
-            "flag_email": data_index_attr['flag_email'],
-            "professional_state": data_index_attr['professional_state'],
-            "profession_code": data_index_attr['profession_code'],
-            "occupation_type": data_index_attr['occupation_type'],
-            "product": data_index_attr['product'],}
+    context = {
+        "request": request,
+        "genders": data_index_attr['sex'],
+        "company": data_index_attr['company'],
+        "payment_day": data_index_attr['payment_day'],
+        "postal_address_type": data_index_attr['postal_address_type'],
+        "marital_status": data_index_attr['marital_status'],
+        "state_of_birth": data_index_attr['state_of_birth'],
+        "nacionality": data_index_attr['nacionality'],
+        "residencial_state": data_index_attr['residencial_state'],
+        "residence_type": data_index_attr['residence_type'],
+        "flag_email": data_index_attr['flag_email'],
+        "professional_state": data_index_attr['professional_state'],
+        "profession_code": data_index_attr['profession_code'],
+        "occupation_type": data_index_attr['occupation_type'],
+        "product": data_index_attr['product'],
+    }
+
 
     return templates.TemplateResponse(name="index.html",
-                                          context=context)                                          
+                                      context=context)
 
 
 @app.post("/score")#, response_class=HTMLResponse)
-async def score(request: Request,form_data: Data = Depends(),):        
-    data = {        
+async def score(request: Request,
+                form_data: Data = Depends(),
+                ):
+
+
+    data = {
         'PAYMENT_DAY': form_data.payment_day,
         'APPLICATION_SUBMISSION_TYPE': form_data.application_submission_type,
         'POSTAL_ADDRESS_TYPE': form_data.postal_address_type,
@@ -126,27 +143,34 @@ async def score(request: Request,form_data: Data = Depends(),):
         'FLAG_PROFESSIONAL_PHONE': form_data.flag_professional_phone,
         'PROFESSIONAL_PHONE_AREA_CODE': form_data.professional_phone_area_code,
         'MONTHS_IN_THE_JOB': form_data.months_in_the_job,
-        #'PROFESSION_CODE': form_data.profession_code,
-        #'OCCUPATION_TYPE': form_data.occupation_type,
-        #'PRODUCT': form_data.product,
-        'PROFESSION_CODE': 'NONE',
-        'OCCUPATION_TYPE': 'NONE',
-        'PRODUCT': 'NONE',        
+        # 'PROFESSION_CODE': form_data.profession_code,
+        # 'OCCUPATION_TYPE': form_data.occupation_type,
+        # 'PRODUCT': form_data.product,
+        'PROFESSION_CODE': None,
+        'OCCUPATION_TYPE': None,
+        'PRODUCT': None,
         'AGE': form_data.age,
         'RESIDENCIAL_ZIP_3': form_data.residencial_zip_3,
-        }
-    prediction , score = model_predict(data)
+    }
 
+    # Send job to ml_service and receive results
+    prediction, score = model_predict(data)
     context = {
         "request": request,
         #"prediction": 1,
         #"score": 70,
         "prediction": prediction,
-        "score": score,        
+        "score": score/10,
         "first_name":form_data.first_name,
         "last_name":form_data.last_name
     }      
 
 
+    # return {"Prediction": prediction, "Score": score}
     return templates.TemplateResponse(name="score.html",
-                                    context=context)
+                                      context=context
+                                      )
+
+
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", reload=True)

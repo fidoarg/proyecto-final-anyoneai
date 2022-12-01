@@ -2,12 +2,15 @@
 $(function () {    
     name_applicant = $("#first_name").val()+" "+$("#last_name").val()
     $("#name_applicant").text(name_applicant);
+    score_display = $("#score").val()
+    score_paint = $("#score").val()
     $("#gauge3").gauge($("#score").val(), { color: "#8BC34A", unit: " Score", font: "560px verdana" }); 
 
     $("#btn_return").click(function(){        
         window.location.href = "/index";
     }); 
 
+    
     var Speedometer = $('#speedometer').SonicGauge({
         label: 'Score Credit',
         start: { angle: -225, num: -100 },

@@ -1,4 +1,6 @@
+# For hashing images
 import hashlib
+# Interact with Operating System
 import os
 
 
@@ -19,10 +21,14 @@ def allowed_file(filename):
         True if the file is an image, False otherwise.
     """
     # Current implementation will allow any kind of file.
-    # TODO
-    if filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
+    # TODO : Completed
 
-        return True
+    allowable_types = ['.png', '.jpg', '.jpeg', '.gif']
+
+    # Get type of file received
+    name, extension = os.path.splitext(filename)
+
+    return extension.lower() in allowable_types
 
 
 def get_file_hash(file):
@@ -42,9 +48,13 @@ def get_file_hash(file):
         New filename based in md5 file hash.
     """
     # Current implementation will return the original file name.
-    # TODO
-    with open(file.filename, "rb") as file_:
-        contents = file_.read()
-        filename_content = hashlib.md5(contents)
-        file.filename = filename_content.hexdigest() + "." + file.filename.split('.')[1]
-    return os.path.basename(file.filename) 
+    # TODO: Completed
+    # Get name and extension of the received file
+
+    extension = os.path.splitext(file.filename)[1]
+    # Create the hashed name
+    hashed_name = hashlib.md5(file.stream.read())
+    # Recover readability of file by pointing to first character
+    file.stream.seek(0)
+
+    return hashed_name.hexdigest() + extension
