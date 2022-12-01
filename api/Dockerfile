@@ -4,6 +4,8 @@ ADD requirements.txt .
 RUN pip install -r requirements.txt
 
 ENV PYTHONPATH=$PYTHONPATH:/src/
+ENV ALGORITHM=HS256
+ENV JWT_SECRET_KEY=060b4cc4e1ccf551e131e0c495939514006d257a16aab75580b37d4b898eb237
 
 ADD ./ /src/
 

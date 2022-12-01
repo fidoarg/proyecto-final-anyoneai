@@ -72,7 +72,7 @@ def verify_user(username, password):
         .where(users_table.username == username)\
         .get_sql()
 
-    conn= sqlite3.connect('./api/app.db')
+    conn= sqlite3.connect('./app.db')
     
     conn_cursor= conn.cursor() 
     query_data= conn_cursor.execute(
@@ -91,8 +91,8 @@ def verify_user(username, password):
         
     return False
 
-templates= Jinja2Templates(directory='./api/templates/auth')
-
+templates= Jinja2Templates(directory='./public/templates')
+@router.post('/', tags= ["auth"])
 @router.get('/', tags= ["auth"])
 async def render_login_form(request: Request):
     response = templates.TemplateResponse(
@@ -133,7 +133,7 @@ async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
             )
         )
 
-    conn= sqlite3.connect('./api/app.db')
+    conn= sqlite3.connect('./app.db')
     
     conn_cursor= conn.cursor() 
     users= conn_cursor.execute(
@@ -146,7 +146,7 @@ async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
         )
 
         conn.commit()
-        response= PlainTextResponse("Usuario creado")
+        response= RedirectResponse(url="/auth")
     else:
         response= PlainTextResponse("Usuario ya existente", status_code= 400)
     conn.commit()
@@ -159,7 +159,8 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     if verify_user(form_data.username, form_data.password):
         
         access_token= create_access_token(form_data.username, expires_delta= 15)
-        response= PlainTextResponse("Usuario ingresado")
+        # response= PlainTextResponse("Usuario ingresado")
+        response= RedirectResponse(url="/index")
         response.set_cookie(key= "auth", value= access_token)
 
     
@@ -190,12 +191,12 @@ def verify_user_token(request: Request):
         if datetime.utcnow() < expiration_datetime:
     
             print(decoded_token)
-            return decoded_token
+            return request
         
         else:
-            response= PlainTextResponse(
-                content= "Token vencido",
-                status_code= 400
+            response= RedirectResponse(
+                url="/",
+                status_code= 300
             )
             response.delete_cookie(key= 'auth')
 
