@@ -16,13 +16,6 @@ from fastapi.exceptions     import HTTPException
 
 from pypika     import Table, Query, functions
 
-users_db = dict(
-    fidoaragon= {
-        "username": "fidoaragon",
-        "password": "$2b$12$Zo92UMElULK66o6QFcuWO.9j33hpeE.qLaRBQIL8o0jq.LEirrCja"
-    }
-)
-
 router= APIRouter(
     prefix= '/auth',
     tags= ["auth"] 
@@ -120,7 +113,12 @@ async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
     
     get_query= Query\
         .from_(users_t)\
-        .select(users_t.username, users_t.password)\
+        .select(
+            users_t.username, users_t.password, 
+            users_t.first_name, users_t.first_name, 
+            users_t.gender, users_t.nationality,
+            users_t.birth_date, users_t.state_birth
+        )\
         .where(users_t.username == form_data.username)\
         .get_sql()
 
@@ -129,7 +127,13 @@ async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
             .into(users_t)\
             .insert(
                 form_data.username,
-                get_hash_password(form_data.password)
+                get_hash_password(form_data.password),
+                form_data.first_name,                
+                form_data.last_name,
+                form_data.gender,
+                form_data.nationality,
+                form_data.birth_date,
+                form_data.state_birth
             )
         )
 
@@ -158,7 +162,17 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     if verify_user(form_data.username, form_data.password):
         
-        access_token= create_access_token(form_data.username, expires_delta= 15)
+        user= dict(
+            username= form_data.username,
+            first_name= form_data.first_name,
+            last_name= form_data.last_name,
+            gender= form_data.gender,
+            nationality= form_data.nationality,
+            birth_date= form_data.birth_date,
+            state_birth= form_data.state_birth
+        )
+
+        access_token= create_access_token(user, expires_delta= 15)
         # response= PlainTextResponse("Usuario ingresado")
         response= RedirectResponse(url="/index")
         response.set_cookie(key= "auth", value= access_token)
