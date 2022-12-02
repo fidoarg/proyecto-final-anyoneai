@@ -20,39 +20,9 @@
                         
                         <form class="form-card" method="post" action="/score">
 
-<!--#################################################################################################-->
-<!--################################    CREDIT DATA     ###########################################-->
-<!--#################################################################################################-->
-
-                            <div><h5 class="text-center mb-4">Credit Data</h5></div>
                             <input type="hidden" id="application_submission_type" name="application_submission_type" value="Web">
 
-                            <div class="row justify-content-between text-left">     
-<!--   
-                                <div hidden class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Requested Product                                                            
-                                    <span class="text-danger"> *</span></label> 
-                                    <select id="product" name="product" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
-                                        {% for value in product %}
-                                        <option value="{{ value.id }}">{{ value.description }}</option>
-                                        {% endfor %}                                        
-                                      </select>
-                                      <span id="errmsg15" style="color: red;"></span>                                   
-                                </div>   
--->    
-                                <div class="form-group col-sm-6 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Credit Amount<span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="credit_amount" name="credit_amount" placeholder="Enter Credit Amount">
-                                    <span id="errmsg10" style="color: red;"></span>  
-                                </div>  
-                                
-                                <div class="form-group col-sm-6 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Months of Credit Term<span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="months_term" name="months_term" placeholder="Enter months of term">                                         
-                                    <span id="errmsg11" style="color: red;"></span>  
-                                </div>  
-
-                            </div>
-
+ 
 <!--#################################################################################################-->
 <!--################################    PERSONAL DATA     ###########################################-->
 <!--#################################################################################################-->

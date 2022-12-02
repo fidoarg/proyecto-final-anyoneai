@@ -13,8 +13,44 @@ from fastapi.templating     import Jinja2Templates
 from fastapi.security       import OAuth2PasswordRequestForm
 from fastapi.responses      import PlainTextResponse, RedirectResponse
 from fastapi.exceptions     import HTTPException
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 
 from pypika     import Table, Query, functions
+
+
+# Fast API utilities
+from fastapi import FastAPI, Request, Form, Depends
+
+# Pydantic utilities
+from pydantic import BaseModel, Field
+from pydantic.dataclasses import dataclass
+
+# Create API
+app = FastAPI(title="Credit Risk Analysis API",
+              description="Final Project of the Machine Learning Engineer Program",
+              version="1.0.1")
+
+# Define public directory
+app.mount("/static",StaticFiles(directory="./public/static"), name="static")
+
+
+# Opening JSON file
+f = open('./public/static/json/index_attr.json')
+
+# returns JSON object as
+# a dictionary
+data_index_attr = json.load(f)
+
+# Application
+@dataclass
+class Data:
+    sex: str = Form(...)
+    state_of_birth: str = Form(...)
+    nationality: str = Form(...)
+    state_of_birth: str = Form(...)
+    first_name: str = Form(...)
+    last_name: str = Form(...) 
 
 users_db = dict(
     fidoaragon= {
@@ -105,9 +141,17 @@ async def render_login_form(request: Request):
 
 @router.get('/signup', tags= ["auth"])
 async def render_login_form(request: Request):
+
+    context = {
+        "request": request,
+        "genders": data_index_attr['sex'],
+        "state_of_birth": data_index_attr['state_of_birth'],
+        "nationality": data_index_attr['nacionality']
+    }
+
     response = templates.TemplateResponse(
         name= 'signup.html',
-        context= {'request': request},
+        context= context,
         status_code= 200
     )
 
@@ -215,13 +259,15 @@ if __name__ == "__main__":
 
     con= sqlite3.connect('./app.db')
     c= con.cursor()
+#    c.execute(
+#        textwrap.dedent("""
+#        CREATE TABLE IF NOT EXISTS users (username text,password text
+#        )
+#        """)
     c.execute(
         textwrap.dedent("""
-        CREATE TABLE IF NOT EXISTS users (
-            username text,
-            password text
-        )
-        """)
+        ALTER TABLE users ADD first_name text;
+        """)        
     )
     con.close()
     
