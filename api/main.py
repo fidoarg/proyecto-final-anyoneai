@@ -102,6 +102,10 @@ async def index(request: Request = Depends(auth.verify_user_token)):
         
         user= None
 
+    print(
+        user
+    )
+
     context = {
         "request": request,
         "genders": data_index_attr['sex'],
