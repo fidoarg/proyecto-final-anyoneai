@@ -1,5 +1,6 @@
 import uvicorn
 import json
+import os
 
 # Fast API utilities
 from fastapi import FastAPI, Request, Form, Depends
@@ -15,6 +16,9 @@ from pydantic import BaseModel, Field
 from pydantic.dataclasses import dataclass
 
 from routers import auth
+from jose import jwt
+JWT_SECRET_KEY= os.environ['JWT_SECRET_KEY']
+ALGORITHM= os.environ['ALGORITHM']
 
 # Create API
 app = FastAPI(title="Credit Risk Analysis API",
@@ -84,6 +88,15 @@ class Data:
 @app.get("/index", response_class=HTMLResponse)
 async def index(request: Request = Depends(auth.verify_user_token)):
 
+		
+    token= request.cookies.get('auth')
+    decoded_token= jwt.decode(
+        token= token,
+        key= JWT_SECRET_KEY,
+        algorithms= [ALGORITHM]
+    ) if token is not None else None
+    user= json.loads(decoded_token.get('sub').replace("\'", "\"")) if decoded_token is not None else decoded_token
+
     context = {
         "request": request,
         "genders": data_index_attr['sex'],
@@ -100,6 +113,7 @@ async def index(request: Request = Depends(auth.verify_user_token)):
         "profession_code": data_index_attr['profession_code'],
         "occupation_type": data_index_attr['occupation_type'],
         "product": data_index_attr['product'],
+        "user_data": user
     }
 
 
