@@ -88,23 +88,16 @@ class Data:
 @app.get("/index", response_class=HTMLResponse)
 async def index(request: Request = Depends(auth.verify_user_token)):
 
-    if request.method.upper() == "GET":
-        token= request.cookies.get('auth')
 
-        decoded_token= jwt.decode(
-            token= token,
-            key= JWT_SECRET_KEY,
-            algorithms= [ALGORITHM]
-        ) if token is not None else None
+    token= request.cookies.get('auth')
 
-        user= decoded_token.get('sub')
-    else:
-        
-        user= None
+    decoded_token= jwt.decode(
+        token= token,
+        key= JWT_SECRET_KEY,
+        algorithms= [ALGORITHM]
+    ) if token is not None else None
 
-    print(
-        user
-    )
+    user= json.loads(decoded_token.get('sub').replace("\'", "\"")) if decoded_token is not None else decoded_token
 
     context = {
         "request": request,
@@ -124,7 +117,6 @@ async def index(request: Request = Depends(auth.verify_user_token)):
         "product": data_index_attr['product'],
         "user_data": user
     }
-
 
     return templates.TemplateResponse(name="index.html",
                                       context=context)
