@@ -2,7 +2,7 @@ import os
 import json
 import sqlite3
 
-from fastapi    import APIRouter, Request, Depends, Cookie
+from fastapi    import APIRouter, Request, Depends, Cookie, Form
 from jose       import jwt
 from typing     import Union, Any
 from pydantic   import BaseModel
@@ -16,12 +16,7 @@ from fastapi.exceptions     import HTTPException
 
 from pypika     import Table, Query, functions
 
-users_db = dict(
-    fidoaragon= {
-        "username": "fidoaragon",
-        "password": "$2b$12$Zo92UMElULK66o6QFcuWO.9j33hpeE.qLaRBQIL8o0jq.LEirrCja"
-    }
-)
+from dataclasses import dataclass
 
 router= APIRouter(
     prefix= '/auth',
@@ -32,10 +27,16 @@ password_context = CryptContext(
     schemes= ["bcrypt"], 
     deprecated= "auto"
 )
-class User(BaseModel):
-    username: str
-    password: str
-
+@dataclass
+class Data:
+    username: str = Form(...)
+    password: str = Form(...)
+    first_name: str = Form(...)
+    last_name: str = Form(...)
+    gender: str = Form(...)
+    nationality: str = Form(...)
+    birth_date: str = Form(...)
+    state_birth: str = Form(...)
 
 JWT_SECRET_KEY= os.environ['JWT_SECRET_KEY']
 ALGORITHM= os.environ['ALGORITHM']
@@ -114,13 +115,13 @@ async def render_login_form(request: Request):
     return response
 
 @router.post('/signup', tags= ["auth"])
-async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
+async def check_signup_user(request: Request, form_data: Data = Depends()):
     
     users_t= Table(name= 'users')
     
     get_query= Query\
         .from_(users_t)\
-        .select(users_t.username, users_t.password)\
+        .select(users_t.username)\
         .where(users_t.username == form_data.username)\
         .get_sql()
 
@@ -129,7 +130,13 @@ async def check_signup_user(form_data: OAuth2PasswordRequestForm = Depends()):
             .into(users_t)\
             .insert(
                 form_data.username,
-                get_hash_password(form_data.password)
+                get_hash_password(form_data.password),
+                form_data.first_name,                
+                form_data.last_name,
+                form_data.gender,
+                form_data.nationality,
+                form_data.birth_date,
+                form_data.state_birth
             )
         )
 
@@ -158,7 +165,42 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     if verify_user(form_data.username, form_data.password):
         
-        access_token= create_access_token(form_data.username, expires_delta= 15)
+        users_t= Table(name= 'users')
+        
+        get_user_query= Query\
+            .from_(users_t)\
+            .select(
+                users_t.username, 
+                users_t.password, 
+                users_t.first_name,
+                users_t.last_name,
+                users_t.gender,
+                users_t.nationality,
+                users_t.birth_date,
+                users_t.state_birth
+            )\
+            .where(users_t.username == form_data.username)\
+            .get_sql()
+
+        conn= sqlite3.connect('./app.db')
+        conn_cursor= conn.cursor() 
+        user= conn_cursor.execute(
+            get_user_query
+        ).fetchall()[0]
+        conn.close()
+
+        user= dict(
+            username= form_data.username,
+            password= user[1],
+            first_name= user[2],
+            last_name= user[3],
+            gender= user[4],
+            nationality= user[5],
+            birth_date= user[6],
+            state_birth= user[7]
+        )
+
+        access_token= create_access_token(user, expires_delta= 15)
         # response= PlainTextResponse("Usuario ingresado")
         response= RedirectResponse(url="/index")
         response.set_cookie(key= "auth", value= access_token)
