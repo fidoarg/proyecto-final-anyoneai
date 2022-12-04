@@ -1,5 +1,6 @@
 $(document).ready(function(){        
-  
+
+    $("#username").focus()
     
     $("#btn_singup").click(function(){        
         window.location.href = "/auth/signup";

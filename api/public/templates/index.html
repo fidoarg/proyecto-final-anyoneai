@@ -31,16 +31,16 @@
 
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="first_name" name="first_name" value="{{ user_data.get('first_name') }}">
+                                    <input readonly type="text" id="first_name" name="first_name" value="{{ user_data.get('first_name') }}">
                                     <span id="errmsg16" style="color: red;"></span>  
                                 </div>
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="last_name" name="last_name" value="{{ user_data.get('last_name') }}">
+                                    <input readonly type="text" id="last_name" name="last_name" value="{{ user_data.get('last_name') }}">
                                     <span id="errmsg17" style="color: red;"></span>  
                                 </div>
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Age
                                     <span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="age" name="age" placeholder="Enter your Age" maxlength="2">                                                                             
+                                    <input readonly type="text" id="age" name="age" placeholder="Enter your Age" maxlength="2" value="{{ user_data.get('birth_date') }}">
                                     <span id="errmsg9" style="color: red;"></span>  
                                 </div>                                
                             </div>
@@ -48,21 +48,29 @@
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Gender
                                     <span class="text-danger"> *</span></label> 
+                                    <!--
                                     <select id="sex" name="sex" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
                                         {% for value in genders %}
                                         <option value="{{ value.id }}">{{ value.description }}</option>
                                         {% endfor %}                                        
                                       </select>
-                                      <span id="errmsg14" style="color: red;"></span>  
+                                    -->
+                                    <input readonly type="text" id="gender_description" name="gender_description" placeholder="Enter your Gender" maxlength="2" value="{{ user_data.get('gender_description') }}">
+                                    <input type="hidden" id="sex" name="sex" value="{{ user_data.get('gender') }}">
+                                    <span id="errmsg14" style="color: red;"></span>  
                                 </div>
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Nationality
                                     <span class="text-danger"> *</span></label> 
+                                    <!--                                    
                                     <select id="nacionality" name="nacionality" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
                                         {% for value in nacionality %}
                                         <option value="{{ value.id }}">{{ value.description }}</option>
                                         {% endfor %}                                        
                                       </select>
-                                      <span id="errmsg18" style="color: red;"></span>  
+                                    -->
+                                    <input readonly type="text" id="nationality_description" name="nationality_description" placeholder="Enter your nationality" value="{{ user_data.get('nationality_description') }}">
+                                    <input type="hidden" id="nacionality" name="nacionality" value="{{ user_data.get('nationality') }}">
+                                    <span id="errmsg18" style="color: red;"></span>  
                                 </div>                                
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Marital Status
                                     <span class="text-danger"> *</span></label> 
@@ -128,11 +136,15 @@
                             <div class="row justify-content-between text-left">
                                 <div hidden class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">State of Birth
                                     <span class="text-danger"> *</span></label> 
+                                    <!--
                                     <select id="state_of_birth" name="state_of_birth" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
                                         {% for value in state_of_birth %}
                                         <option value="{{ value.id }}">{{ value.description }}</option>
                                         {% endfor %}                                        
                                       </select>
+                                    -->
+                                      <input readonly type="text" id="state_of_birth_description" name="state_of_birth_description" placeholder="Enter your state of birth" value="{{ user_data.get('state_of_birth_description') }}">
+                                      <input type="hidden" id="state_of_birth" name="state_of_birth" value="{{ user_data.get('state_of_birth') }}">                                      
                                       <span id="errmsg23" style="color: red;"></span>
                                 </div>                                  
                                 <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial Phone

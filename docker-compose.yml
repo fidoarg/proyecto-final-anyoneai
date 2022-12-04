@@ -22,7 +22,7 @@ services:
       - redis
       - model
     volumes:
-      - ./feedback:/src/feedback     
+      - ./api/app.db:/src/app.db
 
   redis:
     image: redis:6.2.6    

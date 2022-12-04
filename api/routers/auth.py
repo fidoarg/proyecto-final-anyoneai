@@ -6,7 +6,7 @@ from fastapi    import APIRouter, Request, Depends, Cookie, Form
 from jose       import jwt
 from typing     import Union, Any
 from pydantic   import BaseModel
-from datetime   import datetime, timedelta
+from datetime   import datetime, timedelta, date
 
 from passlib.context        import CryptContext
 from fastapi.templating     import Jinja2Templates
@@ -232,15 +232,47 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
             get_user_query
         ).fetchall()[0]
         conn.close()
+
+        password= user[1]
+        first_name= user[2]
+        last_name= user[3]
+        gender= user[4]
+        nationality= user[5]
+        birth_date= user[6]
+        state_birth= user[7]
+
+        d1 = user[6].split('-')
+        year = int(d1[0])
+        month = int(d1[1])
+        day = int(d1[2])
+        birth_date = date(year, month, day)    
+        today = date.today()
+        birth_date = round(((today - birth_date).days)/365)
+        
+        for row in data_index_attr['sex']:
+            if str(row['id']).startswith(gender):
+                gender_description = row['description']        
+
+        for row in data_index_attr['nacionality']:
+            if str(row['id']).startswith(nationality):
+                nationality_description = row['description']        
+
+        for row in data_index_attr['state_of_birth']:
+            if str(row['id']).startswith(state_birth):
+                state_of_birth_description = row['description']        
+
         user= dict(
             username= form_data.username,
-            password= user[1],
-            first_name= user[2],
-            last_name= user[3],
-            gender= user[4],
-            nationality= user[5],
-            birth_date= user[6],
-            state_birth= user[7]
+            password= password,
+            first_name= first_name,
+            last_name= last_name,
+            gender= gender,
+            gender_description= gender_description,            
+            nationality= nationality,
+            nationality_description= nationality_description,
+            birth_date= str(birth_date),            
+            state_birth= state_birth,
+            state_of_birth_description = state_of_birth_description
         )
 
         access_token= create_access_token(user, expires_delta= 15)

@@ -49,6 +49,9 @@
                     <input type="hidden" id="last_name" name="last_name" value="{{last_name}}">
                 {% endif %}
         
+                {% if color != "" %}                    
+                    <input type="hidden" id="color" name="color" value="{{color}}">
+                {% endif %}                
                 <div class="jquery-script-center">
                                                                     
                     <div class="content">
@@ -60,7 +63,43 @@
                         <div class="form-group col-sm-6">                             
                             <button class="btn" id="btn_return"><i class="fa fa-home"></i> Home</button>
                         </div>
-                    </div>                    
+                    </div>  
+                    <div class="sub_div"> 
+                      <table>
+                        <tr>
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #F50B0B; border: 1px solid #000;"></div>                         
+                          </td>
+                          <td>
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Very Low (0-846)   </strong></span></div>                            
+                          </td>
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #D25C5C; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Bass (847-926)   </strong></span></div> 
+                          </td>                          
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #FFFF33; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Regular (927-950)   </strong></span></div>
+                          </td>                                                    
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #99FF99; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Okay (951-972)   </strong></span></div>
+                          </td>                                                                              
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #00CCCC; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Excellent (973-1000)   </strong></span></div>
+                          </td>                                                                                                        
+                        </tr>
+                      </table>    
+                    </div>                                      
                 </div>                      
             </div>
           </div>

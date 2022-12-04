@@ -166,3 +166,11 @@ canvas {
         display: none
     }
 }
+
+.sub_div {
+    position: fixed;
+    bottom: 0px;
+}
+p {
+    margin-left:110px;
+}
