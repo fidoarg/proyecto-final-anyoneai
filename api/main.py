@@ -169,28 +169,25 @@ async def score(request: Request,
     
     # Send job to ml_service and receive results
     prediction, score = model_predict(data)
-
-    score = 70
-    if 0 >= score <= 846: 
+    
+    if 0 <= score <= 846: 
         color = "#F50B0B"
         type_client = "Very Low"
-    if 847 >= score <= 926: 
+    if 847 <= score <= 926: 
         color = "#D25C5C" 
         type_client = "Bass"
-    if 927 >= score <= 950: 
+    if 927 <= score <= 950: 
         color = "#FFFF33" 
         type_client = "Regular"
-    if 951 >= score <= 972: 
+    if 951 <= score <= 972: 
         color = "#99FF99" 
         type_client = "Okay"
-    if 973 >= score <= 1000: 
+    if 973 <= score <= 1000: 
         color = "#00CCCC" 
         type_client = "Excellent"
 
     context = {
         "request": request,
-        #"prediction": 1,
-        #"score": 70,
         "prediction": prediction,
         "score": score/10,
         "first_name":form_data.first_name,
