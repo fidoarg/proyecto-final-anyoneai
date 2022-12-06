@@ -1,3 +1,5 @@
+from typing import Optional
+
 import uvicorn
 import json
 import os
@@ -16,9 +18,7 @@ from pydantic import BaseModel, Field
 from pydantic.dataclasses import dataclass
 
 from routers import auth
-
 from jose import jwt
-
 JWT_SECRET_KEY= os.environ['JWT_SECRET_KEY']
 ALGORITHM= os.environ['ALGORITHM']
 
@@ -78,25 +78,22 @@ class Data:
     flag_professional_phone: str = Form(...)
     professional_phone_area_code: str = Form(...)
     months_in_the_job: str = Form(...)
-    # profession_code: str = Form(...)
-    # occupation_type: str = Form(...)
-    # product: str = Form(...)
     age: str = Form(...)
     residencial_zip_3: str = Form(...)
+    first_name: Optional[str] = Form()
+    last_name: Optional[str] = Form()
 
 @app.post("/index", response_class=HTMLResponse)
 @app.get("/index", response_class=HTMLResponse)
 async def index(request: Request = Depends(auth.verify_user_token)):
 
-
+		
     token= request.cookies.get('auth')
-
     decoded_token= jwt.decode(
         token= token,
         key= JWT_SECRET_KEY,
         algorithms= [ALGORITHM]
     ) if token is not None else None
-
     user= json.loads(decoded_token.get('sub').replace("\'", "\"")) if decoded_token is not None else decoded_token
 
     context = {
@@ -118,11 +115,12 @@ async def index(request: Request = Depends(auth.verify_user_token)):
         "user_data": user
     }
 
+
     return templates.TemplateResponse(name="index.html",
                                       context=context)
 
 
-@app.post("/score")#, response_class=HTMLResponse)
+@app.post("/score", response_class=HTMLResponse)
 async def score(request: Request,
                 form_data: Data = Depends(),
                 ):
@@ -158,28 +156,42 @@ async def score(request: Request,
         'FLAG_PROFESSIONAL_PHONE': form_data.flag_professional_phone,
         'PROFESSIONAL_PHONE_AREA_CODE': form_data.professional_phone_area_code,
         'MONTHS_IN_THE_JOB': form_data.months_in_the_job,
-        # 'PROFESSION_CODE': form_data.profession_code,
-        # 'OCCUPATION_TYPE': form_data.occupation_type,
-        # 'PRODUCT': form_data.product,
         'PROFESSION_CODE': None,
         'OCCUPATION_TYPE': None,
         'PRODUCT': None,
         'AGE': form_data.age,
         'RESIDENCIAL_ZIP_3': form_data.residencial_zip_3,
     }
-
+    
     # Send job to ml_service and receive results
     prediction, score = model_predict(data)
+    
+    if 0 <= score <= 846: 
+        color = "#F50B0B"
+        type_client = "Very Low"
+    if 847 <= score <= 926: 
+        color = "#D25C5C" 
+        type_client = "Bass"
+    if 927 <= score <= 950: 
+        color = "#FFFF33" 
+        type_client = "Regular"
+    if 951 <= score <= 972: 
+        color = "#99FF99" 
+        type_client = "Okay"
+    if 973 <= score <= 1000: 
+        color = "#00CCCC" 
+        type_client = "Excellent"
+
     context = {
         "request": request,
         "prediction": prediction,
-        "score": score
-    }
+        "score": score/10,
+        "first_name":form_data.first_name,
+        "last_name":form_data.last_name,
+        "color": color        
+    }      
 
-    # return {"Prediction": prediction, "Score": score}
+
     return templates.TemplateResponse(name="score.html",
                                       context=context
                                       )
-
-# if __name__ == "__main__":
-#     uvicorn.run("main:app", reload=True)

@@ -1,67 +1,113 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<!-- saved from url=(0140)https://forms.office.com/Pages/ResponsePage.aspx?id=_TkAZSpx4U-4Y4YQPEJcF35mAmXERwFPrYTiyoednI9UNVU3Q0hZQjVSNDUwS0s2VUhWWjVUQzg5QSQlQCN0PWcu -->
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" lang="es-419">
 
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="/static/css/score.css" rel="stylesheet" type="text/css">	
-	<script src="/static/js/jquery.min.js"></script>
-	<script src="/static/js/jquery.gauge.js"></script>
-    <script src="/static/js/bootstrap.bundle.min.js"></script>
-	<title>Credit Risk Sore Analysis - AnyoneAI</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credit Risk Analysis - AnyoneAI</title>
+  <link rel="icon" href="/static/image/ico_anyoneai.ico">
+  <link rel="stylesheet" href="/static/css/light-response-page.min.5f4ba0a.css" id="form-page-css">
+  
+  <link href="/static/css/score.css" rel="stylesheet" type="text/css">	
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/jquery.gauge.js"></script>
+  <script src="/static/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/score.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    
 </head>
 
-<body>
-	<div> <!-- id="jquery-script-menu">  -->
-		<div class="jquery-script-center">
-			
-<!--			<ul>
-				<li><a
-						href="http://www.jqueryscript.net/other/jQuery-Plugin-To-Draw-Animated-Gauges-using-Canvas-2D-API.html">Download
-						This Plugin</a></li>
-				<li><a href="http://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
-				
-			</ul>
--->		
-			<h1 style="margin:150px auto 80px auto; color:#fff;">Credit Score</h1>
-<!--
-			<div class="jquery-script-ads">
-				<script type="text/javascript">
+<body dir="ltr" class="" style="--office-form-theme-primary-color:#04163f; --office-form-theme-secondary-color:#020d26;"data-new-gr-c-s-loaded="14.1087.0">
 
-google_ad_client = "ca-pub-2783044520727903";
-/* jQuery_demo */
-					google_ad_slot = "2780937993";
-					google_ad_width = 728;
-					google_ad_height = 90;
+  <div id="content-root" class="">
+    <div id="form-container" class="office-form-theme-page-background office-form-theme-background" dir="ltr">
+      <div class="form-theme-background-video" aria-hidden="true"><video autoplay="true" loop=""
+          src="https://cdn.hubblecontent.osi.office.net/videos/publish/02dce358-3da9-44eb-8b94-49dec5421b48/932483108.mp4"
+          poster="https://cdn.hubblecontent.osi.office.net/videos/publish/02dce358-3da9-44eb-8b94-49dec5421b48/thumbnails/large.jpg"
+          preload="auto" disablepictureinpicture="" playsinline="" style="width: 100%; height: auto;"></video>
+        </div>
+      <div class="form-content">
+        <div class="form-content-container">
+          <div class="office-form-content office-form-page-padding">
+            <div id="form-main-content">
+                {% if prediction != "" %}                
+                <input type="hidden" id="prediction" name="prediction" value="{{prediction}}">
+                {% endif %}
+        
+                {% if score != "" %}                    
+                    <input type="hidden" id="score" name="score" value="{{score}}">
+                {% endif %}
+                                            
+                {% if first_name != "" %}                    
+                    <input type="hidden" id="first_name" name="first_name" value="{{first_name}}">
+                {% endif %}
+                
+                {% if last_name != "" %}                    
+                    <input type="hidden" id="last_name" name="last_name" value="{{last_name}}">
+                {% endif %}
+        
+                {% if color != "" %}                    
+                    <input type="hidden" id="color" name="color" value="{{color}}">
+                {% endif %}                
+                <div class="jquery-script-center">
+                                                                    
+                    <div class="content">
+                        <h1 style="color:#fff; font-size: xx-large;">Credit Score the <label id="name_applicant"></label></h1>
+                        <canvas id="gauge3" width="500" height="500"></canvas>
+                    </div>            
 
-				</script>
-				<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-				</script>
-			</div>
-			<div class="jquery-script-clear"></div>
--->
-			<div class="content">
-				<canvas id="gauge3" width="500" height="500"></canvas>
-			</div>
-			
-			
-		</div>
-	</div>
-<!--
-	<h1 style="margin:150px auto 30px auto; color:#fff;">jQuery Gauge Plugin Demos</h1>
--->
+                    <div class="row justify-content-end">
+                        <div class="form-group col-sm-6">                             
+                            <button class="btn" id="btn_return"><i class="fa fa-home"></i> Home</button>
+                        </div>
+                    </div>  
+                    <div class="sub_div"> 
+                      <table>
+                        <tr>
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #F50B0B; border: 1px solid #000;"></div>                         
+                          </td>
+                          <td>
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Very Low (0-846)   </strong></span></div>                            
+                          </td>
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #D25C5C; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Bass (847-926)   </strong></span></div> 
+                          </td>                          
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #FFFF33; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Regular (927-950)   </strong></span></div>
+                          </td>                                                    
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #99FF99; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Okay (951-972)   </strong></span></div>
+                          </td>                                                                              
+                          <td>
+                            <div style="width: 20px; height: 20px;background: #00CCCC; border: 1px solid #000;"></div> 
+                          </td>
+                          <td>                            
+                            <div> <span style="color:#fff; font-size: medium;"><strong>Excellent (973-1000)   </strong></span></div>
+                          </td>                                                                                                        
+                        </tr>
+                      </table>    
+                    </div>                                      
+                </div>                      
+            </div>
+          </div>
+          <div class="accessibility-reader-no-display" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<script>
-		$(document).ready(function () {
-			//$("#gauge1").gauge(30, { color: "#F44336" });
-			//$("#gauge2").gauge(70, { color: "#8BC34A", unit: " Volt", font: "40px verdana" });
-			$("#gauge3").gauge(87, { color: "#8BC34A", unit: " Score", font: "560px verdana" }); 
-			//$("#gauge4").gauge(75, { unit: " A", type: "halfcircle" });
-			//$("#gauge5").gauge(99, { unit: " A", type: "halfcircle" });
-			//$("#gauge6").gauge(100, { color: "#FFF", colorAlpha: 0.7, type: "halfcircle" });
-		});
-	</script>
 </body>
-
 </html>

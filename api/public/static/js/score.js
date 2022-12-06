@@ -1,6 +1,30 @@
 
-$(function () {
+$(function () {    
+    name_applicant = $("#first_name").val()+" "+$("#last_name").val()
+    $("#name_applicant").text(name_applicant);
+    color_rgb = $("#color").val()
+            
+    if(color_rgb == "#F50B0B"){    
+        $("#gauge3").gauge($("#score").val(), { color: "#F50B0B", unit: " Score", font: "560px verdana" }); 
+    }
+    if(color_rgb == "#D25C5C"){        
+        $("#gauge3").gauge($("#score").val(), { color: "#D25C5C", unit: " Score", font: "560px verdana" });
+    }
+    if(color_rgb == "#FFFF33"){        
+        $("#gauge3").gauge($("#score").val(), { color: "#FFFF33", unit: " Score", font: "560px verdana" });        
+    }
+    if(color_rgb == "#99FF99"){        
+        $("#gauge3").gauge($("#score").val(), { color: "#99FF99", unit: " Score", font: "560px verdana" });
+    }
+    if(color_rgb == "#00CCCC"){        
+        $("#gauge3").gauge($("#score").val(), { color: "#00CCCC", unit: " Score", font: "560px verdana" });        
+    }
 
+    $("#btn_return").click(function(){        
+        window.location.href = "/index";
+    }); 
+
+    
     var Speedometer = $('#speedometer').SonicGauge({
         label: 'Score Credit',
         start: { angle: -225, num: -100 },

@@ -1,30 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/auth/signup" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <label for="first_name">First Name</label>
-        <input type="text" name="first_name" id="first_name">
-        <label for="username">Last Name</label>
-        <input type="text" name="last_name" id="last_name">
-        <label for="username">Gender</label>
-        <input type="text" name="gender" id="gender">
-        <label for="username">Nationality</label>
-        <input type="text" name="nationality" id="nationality">
-        <label for="username">State of Birth</label>
-        <input type="text" name="state_birth" id="state_birth">
-        <label for="username">Birth date</label>
-        <input type="text" name="birth_date" id="birth_date">
-        <button type="submit">Sign up</button>
-    </form>
-</body>
+<!doctype html>
+<html>
+    <head>
+        <title>CREDIT RISK ANALYSIS API</title>
+        <link rel="stylesheet" href="/static/css/signup.css"></link>
+        <link rel="stylesheet" href="/static/css/font-awesome.css"></link>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css"></link>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>        
+        <script src="/static/js/signup.js"></script>        
+    </head>
+    
+    <body>
+        <div class="container-fluid px-1 py-5 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                    <h1><p class="blue-text">Credit Risk Analysis</p></h1>
+                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit scope.</p>
+                    <div class="card">
+                        
+                        <form class="form-card" method="post" action="/auth/signup">
+                            <span id="msgok" style="color: red;"></span>  
+<!--#################################################################################################-->
+<!--################################    PERSONAL DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div><h5 class="text-center mb-4">Personal Data</h5></div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="first_name" name="first_name" placeholder="Enter your first name"> 
+                                    <span id="errmsg16" style="color: red;"></span>  
+                                </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name"> 
+                                    <span id="errmsg17" style="color: red;"></span>  
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Birthday
+                                    <span class="text-danger"> *</span></label>                                                                                                                                                      
+                                    <input type="date" id="birth_date" name="birth_date">
+                                    <span id="errmsg9" style="color: red;"></span>  
+                                </div>                                
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Gender
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="sex" name="sex" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in genders %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg14" style="color: red;"></span>  
+                                </div>                                
+                            </div>                            
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Nationality
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="nationality" name="nationality" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in nationality %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg18" style="color: red;"></span>  
+                                </div>                                
+                                <div hidden class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">State of Birth
+                                    <span class="text-danger"> *</span></label> 
+                                    <select id="state_of_birth" name="state_of_birth" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
+                                        {% for value in state_of_birth %}
+                                        <option value="{{ value.id }}">{{ value.description }}</option>
+                                        {% endfor %}                                        
+                                      </select>
+                                      <span id="errmsg23" style="color: red;"></span>
+                                </div> 
+                            </div>
+                        
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">User Name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="username" name="username" placeholder="Enter your user name"> 
+                                    <span id="errmsg1" style="color: red;"></span>  
+                                </div>
+                                <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> 
+                                    <input type="password" id="password" name="password" placeholder="Enter your last name"> 
+                                    <span id="errmsg2" style="color: red;"></span>  
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div class="form-group col-sm-6"> 
+                                    <button type="submit" id="btn_singup" class="btn-block btn-primary">Sing Up</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

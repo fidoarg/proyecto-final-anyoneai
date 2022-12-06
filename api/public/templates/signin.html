@@ -1,21 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/auth/token" method="post">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        <button type="submit">Sign in</button>
-    </form>
-    <form action="/auth/signup" method="get">
-        <button type="submit" >Sign up</button>
-    </form>
-</body>
+<!doctype html>
+<html>
+    <head>
+        <title>CREDIT RISK ANALYSIS API</title>
+        <link rel="stylesheet" href="/static/css/signin.css"></link>
+        <link rel="stylesheet" href="/static/css/font-awesome.css"></link>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css"></link>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>        
+        <script src="/static/js/signin.js"></script>        
+    </head>
+    
+    <body>
+        <div class="container-fluid px-1 py-5 mx-auto">
+            <div class="row d-flex justify-content-center">
+                <div class=" text-center">
+                    <h1><p class="blue-text">Credit Risk Analysis</p></h1>
+                    
+                    <div class="card">
+                        
+                        <form class="form-card" method="post" action="/auth/token">
+
+<!--#################################################################################################-->
+<!--################################    LOGIN DATA     ###########################################-->
+<!--#################################################################################################-->
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex">
+
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">User Name<span class="text-danger"> *</span></label> 
+                                    <input type="text" id="username" name="username" placeholder="Enter your user name"> 
+                                    <span id="errmsg1" style="color: red;"></span>  
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex"> <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> 
+                                    <input type="password" id="password" name="password" placeholder="Enter your last name"> 
+                                    <span id="errmsg2" style="color: red;"></span>  
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12 flex-column d-flex">
+
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-12"> 
+                                    <button type="submit" id="btn_singin" class="btn-block btn-primary">Sing In</button>                                                                         
+                                    <button type="button" id="btn_singup" class="btn-block btn-primary">Sing Up</button> 
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            
+        </div>
+    </body>
 </html>
