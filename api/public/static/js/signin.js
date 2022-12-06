@@ -1,3 +1,6 @@
+/*
+Objective: manages all the controls related to the sign in page.
+*/
 $(document).ready(function(){        
 
     $("#username").focus()
@@ -20,9 +23,6 @@ $(document).ready(function(){
             return false;
         }
        
-    }); 
-
- 
-    
+    });     
     
 });            

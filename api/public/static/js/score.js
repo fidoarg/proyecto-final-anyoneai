@@ -1,4 +1,10 @@
 
+/**
+ * Purpose: 
+ * - Handles all controls related to the score page.
+ * - Graph the score recovering the indicated style
+ * 
+ */
 $(function () {    
     name_applicant = $("#first_name").val()+" "+$("#last_name").val()
     $("#name_applicant").text(name_applicant);

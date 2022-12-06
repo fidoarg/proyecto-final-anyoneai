@@ -1,3 +1,6 @@
+/*
+Objective: manages all the controls related to the sign up page.
+*/
 $(document).ready(function(){        
   
     
