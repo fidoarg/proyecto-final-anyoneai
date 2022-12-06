@@ -2,7 +2,7 @@ import os
 import json
 import sqlite3
 
-from fastapi    import APIRouter, Request, Depends, Cookie, Form
+from fastapi    import APIRouter, Request, Depends, Cookie, Form, Response
 from jose       import jwt
 from typing     import Union, Any
 from pydantic   import BaseModel
@@ -198,9 +198,59 @@ async def check_signup_user(request: Request, form_data: Data = Depends()):
         )
 
         conn.commit()
-        response= RedirectResponse(url="/auth")
+        #response= RedirectResponse(url="/auth")
+        html_content = """
+            <html>
+                <head>
+                    <title>Credit Risk Analysis Score</title>
+                    <link rel="stylesheet" href="../static/css/signin.css"></link>
+                    <script language="JavaScript">
+                        function redireccionar() {
+                            setTimeout("location.href='/auth'", 5000);
+                        }
+                    </script>
+                </head>
+                <body onLoad="redireccionar()">
+                    <div class="container-fluid px-1 py-5 mx-auto">
+                        <div class="row d-flex justify-content-center">
+                            <div class=" text-center">
+                                <div class="card">
+                                    <h1><p class="blue-text">User Stored Successfully!!</p></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+            </html>
+            """
+        return HTMLResponse(content=html_content, status_code=200)        
     else:
-        response= PlainTextResponse("Usuario ya existente", status_code= 400)
+        #response= PlainTextResponse("Usuario ya existente", status_code= 400)
+        html_content = """
+        <html>
+            <head>
+                <title>Credit Risk Analysis Score</title>
+                <link rel="stylesheet" href="../static/css/signin.css"></link>
+                <script language="JavaScript">
+                    function redireccionar() {
+                        setTimeout("location.href='/auth'", 5000);
+                    }
+                </script>
+            </head>
+            <body onLoad="redireccionar()">
+                <div class="container-fluid px-1 py-5 mx-auto">
+                    <div class="row d-flex justify-content-center">
+                        <div class=" text-center">
+                            <div class="card">
+                                <h1><p class="blue-text">User Already Exists in the Database!!</p></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        return HTMLResponse(content=html_content, status_code=200)
     conn.commit()
 
     return response

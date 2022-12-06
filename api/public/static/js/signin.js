@@ -6,7 +6,7 @@ $(document).ready(function(){
         window.location.href = "/auth/signup";
     }); 
 
-    $( "#btn_submit" ).click(function() {
+    $( "#btn_singin" ).click(function() {
          
         if($("#username").val() == ''){
             $("#errmsg1").html("Required Value").show().fadeOut(10000);
