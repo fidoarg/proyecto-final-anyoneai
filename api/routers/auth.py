@@ -325,6 +325,17 @@ def verify_user_token(request: Request):
         )
         raise response
 
+@router.post('/logout')
+def logout_user(request: Request):
+    
+    response= RedirectResponse(
+        url="/auth",
+        status_code= 300
+    )
+    response.delete_cookie(key= 'auth')
+
+    return response
+
 if __name__ == "__main__":
 
     import sqlite3, textwrap
