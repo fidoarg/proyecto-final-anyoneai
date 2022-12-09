@@ -1,9 +1,11 @@
 import json
 from unittest import TestCase
+from unittest.mock import patch
 from fastapi.testclient import TestClient
-import pandas as pd
+from fastapi.encoders import jsonable_encoder
 
 from main import app, Data
+from routers.auth import create_access_token
 
 class TestIntegration(TestCase):
     def setUp(self):
@@ -16,16 +18,16 @@ class TestIntegration(TestCase):
         )
         self.assertEqual(response.status_code, 422)
 
-    def test_score_ok(self):
+    @patch("main.model_predict")
+    def test_score_ok(self, mock):
         # Mocks
-        # data = pd.read_csv('./tests/test_entry.csv').iloc[0,:].to_dict()
         form_data = Data(sex="F",
                         company="N",
                         payment_day="1",
                         application_submission_type="Web",
                         postal_address_type="1",
                         marital_status="2",
-                        quant_dependants="3",
+                        quant_dependants=3,
                         state_of_birth="SC",
                         nacionality="1",
                         residencial_state="SC",
@@ -53,27 +55,33 @@ class TestIntegration(TestCase):
                         first_name="Jhon",
                         last_name="Doe"
         )
-
+        # Encode data as json so the service can understand it
+        data = jsonable_encoder(form_data)
         pred_class = 1
         pred_score = 0.4770884
+        mock.return_value = (pred_class, pred_score)
         response = self.client.post(
             "/score",
-            data=form_data
+            data=data
         )
-        print(response.request)
+
         self.assertEqual(response.status_code, 200)
-        # data = json.loads(response.get_data(as_text=True))
-        # self.assertEqual(len(data.keys()), 3)
-        # self.assertEqual(data["prediction"], pred_class)
-        # self.assertAlmostEqual(data["score"], pred_score, 5)
 
 
 class TestEndpointsAvailability(TestCase):
     def setUp(self):
         self.client = TestClient(app)
 
+
     def test_index(self):
-        response = self.client.get("/index")
+        response = self.client.get(
+                "/index",
+                cookies={
+                    "auth": create_access_token(
+                            sub={"username": "JhonDoe"}
+                    )
+                }
+        )
         self.assertEqual(response.status_code, 200)
         response = self.client.post("/index")
         # No args == Bad Request
