@@ -30,7 +30,7 @@ $ docker-compose up --build
 > You can set a different port for the project in the docker-compose.yml file
 
 ## How to use:
-1. In a browser go to [localhost:80](localhost:80), or the port you assigned to the project.
+1. In a browser go to `localhost:80`, or the port you assigned to the project.
 2. Sign Up or sign in if you already have an account.
 3. Fill the form with the required data and request a credit.
 4. Your score will be displayed.
