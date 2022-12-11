@@ -1,3 +1,9 @@
+<!--
+    Goal: New user registration page, personal data is captured and validated. 
+        With the data entered, it is validated that the user does not exist and 
+        then proceed to create it. This page communicates with 
+        the OAUTH2 authentication service.
+-->
 <!doctype html>
 <html>
     <head>
@@ -15,11 +21,13 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                     <h1><p class="blue-text">Credit Risk Analysis</p></h1>
-                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit scope.</p>
+                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit score.</p>
                     <div class="card">
                         
                         <form class="form-card" method="post" action="/auth/signup">
-                            <span id="msgok" style="color: red;"></span>  
+                            <div class="messageok">
+                                <span id="msgok" style="color: aqua; font-size: 60;">User Stored Successfully!!</span>  
+                            </div>                            
 <!--#################################################################################################-->
 <!--################################    PERSONAL DATA     ###########################################-->
 <!--#################################################################################################-->
@@ -81,15 +89,21 @@
                                     <span id="errmsg1" style="color: red;"></span>  
                                 </div>
                                 <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> 
-                                    <input type="password" id="password" name="password" placeholder="Enter your last name"> 
+                                    <input type="password" id="password" name="password">
                                     <span id="errmsg2" style="color: red;"></span>  
                                 </div>
                             </div>
 
                             <div class="row justify-content-end">
-                                <div class="form-group col-sm-6"> 
-                                    <button type="submit" id="btn_singup" class="btn-block btn-primary">Sing Up</button> 
+                                <div class="form-group col-sm-4"> 
+                                    
                                 </div>
+                                <div class="form-group col-sm-4"> 
+                                    <button type="submit" id="btn_singup" class="btn-block btn-primary">Sign Up</button>
+                                </div>
+                                <div class="form-group col-sm-4"> 
+                                    
+                                </div>                                                                
                             </div>
                         </form>
                     </div>

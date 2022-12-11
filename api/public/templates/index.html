@@ -1,3 +1,8 @@
+<!--
+    Goal: Credit score analysis request registration page. Contains all the variables to 
+    be used by the model. Preload personal data from the registered user base. 
+    Get the data from the data dictionary by the get method.
+-->
 <!doctype html>
 <html>
     <head>
@@ -15,7 +20,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                     <h1><p class="blue-text">Credit Risk Analysis</p></h1>
-                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit scope.</p>
+                    <p class="blue-text">Enter your data to perform<br> the credit analysis and thus provide your credit score.</p>
                     <div class="card">
                         
                         <form class="form-card" method="post" action="/score">
@@ -93,12 +98,12 @@
                                       </select>
                                       <span id="errmsg20" style="color: red;"></span> 
                                 </div>                                
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Number of Dependents
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Number of Dependants
                                     <span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="quant_dependants" name="quant_dependants" placeholder="Enter number of dependents" maxlength="2">                                         
+                                    <input type="text" id="quant_dependants" name="quant_dependants" placeholder="Enter number of dependants" maxlength="2">
                                     <span id="errmsg1" style="color: red;"></span>                
                                 </div>
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial State
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residential State
                                     <span class="text-danger"> *</span></label> 
                                     <select id="residencial_state_select" name="residencial_state_select" class="residencial_state_select form-select form-select-sm" aria-label=".form-select-sm example">                                        
                                         {% for value in residencial_state %}
@@ -113,11 +118,11 @@
 
                             <div class="row justify-content-between text-left">
                                 <div class="form-group col-sm-4 flex-column d-flex"> 
-                                    <label class="form-control-label px-3">Residencial Phone Area Code<span class="text-danger"> *</span></label>                                     
-                                    <input type="text" id="residencial_phone_area_code" name="residencial_phone_area_code" placeholder="Enter residencial phone area code">                                         
+                                    <label class="form-control-label px-3">Residential Phone Area Code<span class="text-danger"> *</span></label>
+                                    <input type="text" id="residencial_phone_area_code" name="residencial_phone_area_code" placeholder="Enter residential phone area code">
                                     <span id="errmsg2" style="color: red;"></span>                
                                 </div> 
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial Type
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residential Type
                                     <span class="text-danger"> *</span></label> 
                                     <select id="residence_type" name="residence_type" class="form-select form-select-sm" aria-label=".form-select-sm example">                                        
                                         {% for value in residence_type %}
@@ -147,7 +152,7 @@
                                       <input type="hidden" id="state_of_birth" name="state_of_birth" value="{{ user_data.get('state_of_birth') }}">                                      
                                       <span id="errmsg23" style="color: red;"></span>
                                 </div>                                  
-                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residencial Phone
+                                <div class="form-group col-sm-4 flex-column d-flex"> <label class="form-control-label px-3">Residential Phone
                                     <span class="text-danger"> *</span></label>                                 
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flag_residencial_phone" id="flag_residencial_phone_yes" value="Y">

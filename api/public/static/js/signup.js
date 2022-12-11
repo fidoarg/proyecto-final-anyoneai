@@ -1,3 +1,6 @@
+/*
+Objective: manages all the controls related to the sign up page.
+*/
 $(document).ready(function(){        
   
     
@@ -55,8 +58,9 @@ $(document).ready(function(){
             $('#password').focus()
             return false;
         }
-       
+
     }); 
+
 
  
     

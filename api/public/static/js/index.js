@@ -1,3 +1,10 @@
+
+/**
+ * Objective:
+ * - Handles all controls related to the score page.
+ * - fetch the data from the json dictionary and load it
+ * - retrieves the values from the database and graphs them
+ */
 $(document).ready(function(){        
     $("select.residencial_state_select").change(function(){        
         var seleccion= $(this).children("option:selected").val();

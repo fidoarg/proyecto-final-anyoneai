@@ -10,9 +10,8 @@ import redis
 import xgboost as xgb
 import settings
 
-# TODO: Completed
-# Connect to Redis and assign to variable `db``
-# Make use of settings.py module to get Redis settings like host, port, etc.
+
+# Connect to Redis
 db = redis.Redis(
     host=settings.REDIS_IP,
     port=settings.REDIS_PORT,
@@ -34,19 +33,19 @@ with open('./categorical_features_names.txt', 'r') as f:
         # Read line by line and append top empty list
         cat_features.append(line.split('\n')[0])
 
-# Load your ML model and assign to variable `model`
+# Load ML model
 model = xgb.XGBClassifier()
 model.load_model('./best_model.txt')
 
 def predict(data):
     """
-    Load image from the corresponding folder based on the image name
-    received, then, run our ML model to get predictions.
+    Load dictionary with the application data received from redis, then, run our
+    ML model to get predictions.
 
     Parameters
     ----------
     data : Dict
-        Applicant Data as dictionary.
+        Applicant Data.
 
     Returns
     -------
@@ -60,16 +59,14 @@ def predict(data):
 
     # Preprocess data
     data_df = data_df.convert_dtypes()
-    # Remove Target variable from features
-    # cat_features.remove('TARGET_LABEL_BAD=1')
     # Use the lists with categorical and numerical feature names
     for col in cat_features:
         # First to string
         data_df[col] = data_df[col].astype('string')
         data_df[col] = pd.Categorical(data_df[col])
 
-    # As Pandas could introduce pd.NA values in some features
-    # when converting them to categorical, let's replace them with np.nan by casting
+    # As Pandas could introduce pd.NA values in some features when converting
+    # them to categorical, let's replace them with np.nan by casting
     # int columns to float32
     cols_to_float = data_df.select_dtypes(include='int').columns
     data_df[cols_to_float] = data_df[cols_to_float].astype(dtype='float32')
@@ -96,11 +93,10 @@ def classify_process():
     received, then, run our ML model to get predictions.
     """
     while True:
-
         # Get job data
         job_data = json.loads(db.brpop(settings.REDIS_QUEUE)[1].decode('utf-8'))
 
-        # Run analysis over that image
+        # Run analysis over the application data
         pred, score = predict(job_data["data"])
         model_pred = {
             "prediction": int(pred),
@@ -109,7 +105,7 @@ def classify_process():
         # Store prediction to Redis
         db.set(name=job_data['id'], value=json.dumps(model_pred))
 
-        # Don't forget to sleep for a bit at the end
+        # Little sleep on server
         time.sleep(settings.SERVER_SLEEP)
 
 

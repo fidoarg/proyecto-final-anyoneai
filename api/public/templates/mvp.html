@@ -50,7 +50,7 @@
                                 <option value="{{ value.id }}">{{ value.description }}</option>
                                 {% endfor %}
                             </select></td>
-                            <td><label for="quant_dependants">Number of Dependents:</label> </td>
+                            <td><label for="quant_dependants">Number of Dependants:</label> </td>
                             <td><input type="number" id="quant_dependants" name="quant_dependants" min="0" value="0"></td>                                                        
                         </tr>   
                         <tr>
@@ -66,7 +66,7 @@
                                 <option value="{{ value.id }}">{{ value.description }}</option>
                                 {% endfor %}
                             </select></td>                        
-                            <td><label for="residencial_state">Residencial State:</label></td>
+                            <td><label for="residencial_state">Residential State:</label></td>
                             <td><select class="residencial_state_select" id="residencial_state_select" name="residencial_state_select">
                                 {% for value in residencial_state %}
                                 <option value="{{ value.id }}-{{ value.code_area }}">{{ value.description }}</option>                                
@@ -81,7 +81,7 @@
                         </tr> 
                         <tr>
                             <td>
-                                <label for="flag_residencial_phone">Residencial Phone:</label>
+                                <label for="flag_residencial_phone">Residential Phone:</label>
                             </td>
                             <td>
                                 <input type="radio" id="flag_residencial_phone_yes" name="flag_residencial_phone" value="Y">
