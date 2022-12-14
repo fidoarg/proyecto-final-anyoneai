@@ -3,7 +3,7 @@ from utils import Data, create_access_token
 from fastapi.encoders import jsonable_encoder
 
 class APIUser(HttpUser):
-    wait_time = between(2, 5)
+    wait_time = between(0.25, 2)
 
     @task(1)
     def index_get(self):

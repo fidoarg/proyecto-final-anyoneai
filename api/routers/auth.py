@@ -2,7 +2,7 @@ import os
 import json
 import sqlite3
 
-from fastapi    import APIRouter, Request, Depends, Cookie, Form
+from fastapi    import APIRouter, Request, Depends, Cookie, Form, Response
 from jose       import jwt
 from typing     import Union, Any
 from pydantic   import BaseModel
@@ -11,7 +11,7 @@ from datetime   import datetime, timedelta, date
 from passlib.context        import CryptContext
 from fastapi.templating     import Jinja2Templates
 from fastapi.security       import OAuth2PasswordRequestForm
-from fastapi.responses      import PlainTextResponse, RedirectResponse
+from fastapi.responses      import PlainTextResponse, RedirectResponse, HTMLResponse
 from fastapi.exceptions     import HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -79,12 +79,56 @@ JWT_SECRET_KEY= os.environ['JWT_SECRET_KEY']
 ALGORITHM= os.environ['ALGORITHM']
 
 def get_hash_password(password: str):
+    """
+    Recibes a plain text password and hashes it with bcrypt scheme
+
+    Parameters
+    ----------
+    password : str
+        Plain text password.
+
+    Returns
+    -------
+    hash_password : str
+        Hash password based on bcrypt scheme.
+    """
     return password_context.hash(password)
 
 def verify_password(password: str, hashed_pass: str) -> bool:
+    """
+    Recibes a plain text password and hashed encrypted password and verify if they match.
+
+    Parameters
+    ----------
+    password: str
+        Plain text password.
+    hashed_pass : str
+        Encrypted password retrieved from database
+
+    Returns
+    -------
+    verification : bool
+        Boolean if password is valid.
+    """
     return password_context.verify(password, hashed_pass)    
 
 def create_access_token(sub: Union[str, Any], expires_delta: int = None) -> str:
+
+    """
+    Recibes a json format string or dict and the amount of minutes a new token can last and returns a encrypted token with that data saved in a JWT.
+
+    Parameters
+    ----------
+    sub: dict, str
+        User data to be encrypted.
+    expires_delta : int
+        Number of minutes that the encrypted token is valid
+
+    Returns
+    -------
+    encrypted_jwt : str
+        JSON web token with the information provided.
+    """
 
     if expires_delta is not None:
         expires_delta= datetime.utcnow() + timedelta(minutes= expires_delta)
@@ -103,6 +147,22 @@ def create_access_token(sub: Union[str, Any], expires_delta: int = None) -> str:
 
 def verify_user(username, password):
 
+    """
+    Recibes a plain text password and username and validates the credentials in the database
+
+    Parameters
+    ----------
+    username: str
+        User database.
+    password : str
+        Plain text password provided.
+
+    Returns
+    -------
+    verification : bool
+        Boolean if credentials are valid.
+    """
+    
     users_table= Table('users')
     get_user_query= Query\
         .from_(users_table)\
@@ -198,15 +258,65 @@ async def check_signup_user(request: Request, form_data: Data = Depends()):
         )
 
         conn.commit()
-        response= RedirectResponse(url="/auth")
+        #response= RedirectResponse(url="/auth")
+        html_content = """
+            <html>
+                <head>
+                    <title>Credit Risk Analysis Score</title>
+                    <link rel="stylesheet" href="../static/css/signin.css"></link>
+                    <script language="JavaScript">
+                        function redireccionar() {
+                            setTimeout("location.href='/auth'", 5000);
+                        }
+                    </script>
+                </head>
+                <body onLoad="redireccionar()">
+                    <div class="container-fluid px-1 py-5 mx-auto">
+                        <div class="row d-flex justify-content-center">
+                            <div class=" text-center">
+                                <div class="card">
+                                    <h1><p class="blue-text">User Stored Successfully!!</p></h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+            </html>
+            """
+        return HTMLResponse(content=html_content, status_code=200)        
     else:
-        response= PlainTextResponse("User already exists", status_code= 400)
+        #response= PlainTextResponse("Usuario ya existente", status_code= 400)
+        html_content = """
+        <html>
+            <head>
+                <title>Credit Risk Analysis Score</title>
+                <link rel="stylesheet" href="../static/css/signin.css"></link>
+                <script language="JavaScript">
+                    function redireccionar() {
+                        setTimeout("location.href='/auth'", 5000);
+                    }
+                </script>
+            </head>
+            <body onLoad="redireccionar()">
+                <div class="container-fluid px-1 py-5 mx-auto">
+                    <div class="row d-flex justify-content-center">
+                        <div class=" text-center">
+                            <div class="card">
+                                <h1><p class="blue-text">User Already Exists in the Database!!</p></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        return HTMLResponse(content=html_content, status_code=200)
     conn.commit()
 
     return response
 
 @router.post('/token', tags= ["auth"])
-async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
 
     if verify_user(form_data.username, form_data.password):
         
@@ -282,11 +392,36 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     
     else:
         
-        raise HTTPException(
-            status_code= 400,
-            detail= "Invalid username or password",
-        )
+        #raise HTTPException(
+        #    status_code= 400,
+        #    detail= "Invalid username or password",
+        #)
 
+        html_content = """
+        <html>
+            <head>
+                <title>Credit Risk Analysis Score</title>
+                <link rel="stylesheet" href="../static/css/signin.css"></link>
+                <script language="JavaScript">
+                    function redireccionar() {
+                        setTimeout("location.href='/auth'", 5000);
+                    }
+                </script>
+            </head>
+            <body onLoad="redireccionar()">
+                <div class="container-fluid px-1 py-5 mx-auto">
+                    <div class="row d-flex justify-content-center">
+                        <div class=" text-center">
+                            <div class="card">
+                                <h1><p class="blue-text">Invalid username or password!!</p></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </body>
+        </html>
+        """
+        return HTMLResponse(content=html_content, status_code=200)
     return response
 
 @router.get("/user")
